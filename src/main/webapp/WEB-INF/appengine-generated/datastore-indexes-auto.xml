@@ -1,0 +1,11 @@
+<!-- Indices written at Fri, 27 Dec 2013 16:20:06 BRT -->
+
+<datastore-indexes>
+
+    <!-- Used 6 times in query history -->
+    <datastore-index kind="log" ancestor="false" source="auto">
+        <property name="idMotorista" direction="asc"/>
+        <property name="dateCreated" direction="desc"/>
+    </datastore-index>
+
+</datastore-indexes>
