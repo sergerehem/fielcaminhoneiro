@@ -9,8 +9,7 @@ if (user == null) {
 	  //request.motoristas = new Motoristas().listBySearch(search)
 
 		request.motoristas = search.search {
-			select all 
-			from motorista
+			select all from motorista
 			where nome =~ search
 		}
 	} else {

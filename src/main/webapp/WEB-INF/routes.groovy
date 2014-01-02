@@ -1,6 +1,6 @@
 get "/favicon.ico", redirect: "/img/favicon.ico"
 
-get "/", forward: "/WEB-INF/pages/index.gtpl"
+get "/", forward: "/motoristas"
 
 // LOGIN
 get "/login", forward: "/controller/login/login.groovy"
@@ -10,6 +10,7 @@ get "/motoristas", 							forward: "/controller/motorista/listMotorista.groovy"
 get "/motorista/list",          forward: "/controller/motorista/listMotorista.groovy"
 get "/motorista/add",           forward: "/controller/motorista/editMotorista.groovy"
 post "/motorista/insert",       forward: "/controller/motorista/insertMotorista.groovy"
+get "/motorista/view/@id",      forward: "/controller/motorista/editMotorista.groovy?id=@id&view=true"
 get "/motorista/edit/@id",      forward: "/controller/motorista/editMotorista.groovy?id=@id"
 get "/motorista/delete/@id",    forward: "/controller/motorista/deleteMotorista.groovy?id=@id"
 post"/motorista/update",        forward: "/controller/motorista/updateMotorista.groovy"
@@ -23,4 +24,9 @@ post "/grupo/insert",        		forward: "/controller/grupo/insertGroup.groovy"
 get  "/grupo/delete/@id",     	forward: "/controller/grupo/deleteGroup.groovy?id=@id"
 get  "/grupo/edit/@id",       	forward: "/controller/grupo/editGroup.groovy?id=@id"
 post "/grupo/update",         	forward: "/controller/grupo/updateGroup.groovy"
+
+// PONTOS
+get "/pontos", 				   forward: "/controller/pontos/listPontos.groovy"
+get "/pontos/add/@id/@pontos", forward: "/controller/pontos/addPontos.groovy?id=@id&pontos=@pontos"
+
 

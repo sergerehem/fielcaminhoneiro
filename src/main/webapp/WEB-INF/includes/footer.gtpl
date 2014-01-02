@@ -6,9 +6,10 @@
     <script src="/js/jquery-1.10.2.js"></script>
     <script src="/js/bootstrap.js"></script>
 
-    <!-- Page Specific Plugins -->
+    <!-- Page Specific Plugins
     <script src="/js/tablesorter/jquery.tablesorter.js"></script>
     <script src="/js/tablesorter/tables.js"></script>
+   -->
 
 		<!-- Masked Input -->
 		<script src="/js/jquery.maskedinput.min.js" type="text/javascript"></script>
@@ -43,15 +44,6 @@
         (jQuery)('table.footable').footable();
       });
     </script> 
-
-    <!-- Data Table -->
-    <link href="/datatable/css/jquery.dataTables.css">
-		<script type="text/javascript" language="javascript" src="/datatable/js/jquery.dataTables.js"></script>
-		<script type="text/javascript" charset="utf-8">
-			(jQuery)(document).ready(function() {
-				(jQuery)('.datatable').dataTable();
-			} );
-		</script>
 
 		<!-- Graph
     <script src="/js/raphael-min.js"></script>

@@ -26,11 +26,10 @@
 
     <!-- Footable -->        
     <link href="/footable/css/footable.core.min.css" rel="stylesheet">
+    <link href="/footable/css/footable.standalone.min.css" rel="stylesheet">
 
 <!--    <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script> -->
 
-    <!-- Data Table -->
-    <link href="/datatable/css/jquery.dataTables.css">
   </head>
 
   <body>
@@ -50,40 +49,12 @@
           <a class="navbar-brand" href="/">Clube Fiel Caminhoneiro</a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-<!--
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <ul class="nav navbar-nav side-nav">
-
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-table"></i> Cadastros <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="/ranking"><i class="fa fa-user"></i> Ranking</a></li>
-								<li><a href="/motoristas"><i class="fa fa-user"></i> Motoristas</a></li>
-								<li><a href="/grupos"><i class="fa fa-users"></i> Grupos</a></li>
-							</ul>
-						</li>
-					
-						<li class="dropdown">
-							<a href="/motoristas" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Motoristas <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="/motorista/add"><i class="fa fa-plus-circle"></i> Novo Motorista</a></li>
-							</ul>
-						</li>
-
-						<li class="dropdown">
-							<a href="/grupos" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Grupos <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="/grupo/add"><i class="fa fa-plus-circle"></i> Novo Grupo</a></li>
-							</ul>
-						</li>
-          </ul>
--->
           <ul class="nav navbar-nav navbar-right navbar-user">
 						<%if (user != null) {%>
-						<li><a href="/ranking"><i class="fa fa-trophy"></i> Ranking</a></li>
+						<!--<li><a href="/ranking"><i class="fa fa-trophy"></i> Ranking</a></li>-->
 						<li><a href="/motoristas"><i class="fa fa-user"></i> Motoristas</a></li>
-<!--						<li><a href="/grupos"><i class="fa fa-users"></i> Grupos</a></li>-->
+						<li><a href="/grupos"><i class="fa fa-users"></i> Grupos</a></li>
+						<li><a href="/pontos"><i class="fa fa-certificate"></i> Pontos</a></li>
 						<%}%>
             <li class="dropdown user-dropdown">
 							<%if (user != null) {%>
