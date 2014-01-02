@@ -30,7 +30,10 @@
             <!-- Indicates a dangerous or potentially negative action -->
             <button type="button" class="btn btn-danger" onclick="javascript:document.location.href = '/grupos';">Cancelar</button>
           </div>
-        </div>          
+        </div>
+        <% if(existingKey) { %>
+           <input type="hidden" name="id" value="${group.key.id}">
+        <% } %>
       </form>
        
     </div>      

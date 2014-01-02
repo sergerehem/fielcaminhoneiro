@@ -10,15 +10,21 @@
    <h1>Motorista <small>${action.toLowerCase()}</small></h1>
    <hr>
 </div>
+
+<%if (params.novaCategoria != 'null' && params.novaCategoria != null) { %>
+<div class="alert alert-warning alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong style="font-size:20pt;">ATENÇÃO!!!</strong> O motorista completou <span style="font-size:20pt;" class="label ${params.novaCategoria}"><i class="fa fa-certificate"></i> ${motorista?.pontos}</span> pontos</strong> e deve mudar para a categoria <span style="font-size:20pt;" class="label ${params.novaCategoria}">${params.novaCategoria}</span>.<br><br>Entregue a ele o seu novo Cartão Clube Fiel Caminhoneiro!
+</div>
+<%}%>
+<%if (params.pagarBonus != 'null' && params.pagarBonus != null) { %>
+<div class="alert alert-success alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong style="font-size:20pt;">BÔNUS!!!</strong> Pague agora <span class="label label-success" style="font-size: 18pt;"><i class="fa fa-money"></i> $params.pagarBonus</span> ao motorista porque ele completou <span style="font-size:20pt;" class="label ${motorista.categoria}"><i class="fa fa-certificate"></i> ${motorista?.pontos}</span> pontos!!!</strong>
+</div>
+<%}%>
 <div class="row">
   <div class="col-lg-8">
-    <!--
-    <div class="progress">
-      <div class="progress-bar progress-bar-success" style="width: 35%"></div>
-      <div class="progress-bar progress-bar-warning" style="width: 20%"></div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%"></div>
-    </div>
-    -->
     <form role="form" class="form-horizontal" action="/motorista/${!existingKey ? 'insert' : 'update'}" method="POST">
         <fieldset<%if (request.view == 'true') {%> disabled<%}%>>
         <div class="form-group">
@@ -44,7 +50,7 @@
             </select>
           </div>
         </div>
-        <%if (request.view == 'false') {%>
+        <%if (request.view != 'true') {%>
         <div class="form-actions">
             <div class="col-lg-offset-2 col-lg-10">
               <p>
@@ -70,6 +76,7 @@
     max = 300000
   }
   pontos = motorista?.pontos ? motorista.pontos as Integer : 0
+  bonus = motorista?.bonus ? motorista.bonus as Integer : 0
   percent = (pontos / max * 100) as Integer
   dif = max - pontos
   %>
@@ -86,9 +93,16 @@
           </div>
         </div>
         <div class="caption">
-          <h2><span class="label $categoria">$pontos</span> pontos</h2>
-          <hr>
-          <p>Faltam $dif pontos para mudar de categoria...</p>
+            <div class="row">
+                <div class="col-lg-7">
+                    <span class="label $categoria label-lg" style="font-size: 18pt;"><i class="fa fa-certificate"></i> $pontos</span>
+                </div>
+                <div class="col-lg-5 pull-right">
+                    <span class="label label-success" style="font-size: 18pt;"><i class="fa fa-money"></i> $bonus</span>
+                </div>
+            </div>
+              <hr>
+              <p>Faltam <strong>$dif</strong> pontos para mudar de categoria...</p>
         <!-- Button trigger modal -->
         <button id="adicionarPontosBtn" class="btn <%if (categoria == "prata"){%>btn-primary<%}else{%>btn-warning<%}%>" data-toggle="modal" data-target="#myModal">
           Adicionar Pontos

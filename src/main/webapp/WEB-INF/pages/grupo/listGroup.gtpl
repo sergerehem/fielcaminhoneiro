@@ -4,15 +4,15 @@
     <div class="col-lg-12">
       <h1 class="page-header">Grupos <small>listar</small></h1>
 
-      <a href="/grupo/add">Incluir Grupo</a>
+      <a class="btn btn-primary pull-right" href="/grupo/add">Incluir Grupo</a>
       <br><br>
       <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-striped footable">
           <thead>
              <tr>
                 <th>Nome</th>
                 <th>Descrição</th>
-                <th>&nbsp;</th>
+                <th data-sort-ignore="true">&nbsp;</th>
              </tr>
           </thead>
           <tbody>
@@ -20,7 +20,10 @@
                 <tr>
                    <td>${group.name}</td>
                    <td>${group.description}</td>
-                   <td><a href="/grupo/delete/${group.key.id}">Delete</a> | <a href="/grupo/edit/${group.key.id}">Edit</a></td>
+                   <td>
+                    <a class='btn btn-info btn-xs' href="/grupo/edit/${group.key.id}"><i class="fa fa-pencil-square-o"	></i> alterar</a>
+                    <a class='btn btn-danger btn-xs' onclick="if (!confirm('Tem certeza que deseja EXCLUIR este Grupo?')) return false;" href="/grupo/delete/${group.key.id}"><i class="fa fa-trash-o"></i> excluir</a>
+                    </td>
                 </tr>
              <% } %>
           </tbody>

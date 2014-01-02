@@ -51,7 +51,7 @@
 
           <ul class="nav navbar-nav navbar-right navbar-user">
 						<%if (user != null) {%>
-						<!--<li><a href="/ranking"><i class="fa fa-trophy"></i> Ranking</a></li>-->
+						<li><a href="/ranking"><i class="fa fa-trophy"></i> Ranking</a></li>
 						<li><a href="/motoristas"><i class="fa fa-user"></i> Motoristas</a></li>
 						<li><a href="/grupos"><i class="fa fa-users"></i> Grupos</a></li>
 						<li><a href="/pontos"><i class="fa fa-certificate"></i> Pontos</a></li>
@@ -63,7 +63,7 @@
                 <li><a href="${users.createLogoutURL('/')}"><i class="fa fa-power-off"></i> Log Out</a></li>
               </ul>
 							<%} else {%>
-							<a href="/login?continueTo=/">login</a>
+							<a href="/login?continueTo=${request.queryUrl}">login</a>
 						<%}%>
             </li>
           </ul>

@@ -23,6 +23,16 @@ public class Motoristas {
         }
     }
 
+
+    def listRanking() {
+        datastore.execute {
+            select all
+            from motorista
+            where pontos > 0
+            sort desc by pontos
+        }
+    }
+
     def listBySearch(search) {
         search.search {
             select all
@@ -66,6 +76,7 @@ public class Motoristas {
         e.nome = nome
         e.celular = celular
         e.groups = prepareGroups(groups)
+        e.lastUpdated = (new Clock()).getDateTime()
         e.save()
         //}
     }
@@ -75,9 +86,11 @@ public class Motoristas {
         e.nome = nome
         e.celular = celular
         e.pontos = 0
+        e.bonus = 0
         e.categoria = "bronze"
         e.groups = prepareGroups(groups)
         e.dateCreated = (new Clock()).getDateTime()
+        e.lastUpdated = e.dateCreated
         e.userEmail = user.nickname
         e.save()
     }
@@ -89,15 +102,41 @@ public class Motoristas {
         def operacao = "Adicionou $pontos pontos ($regiao); "
         new Logs().add(id, e.nome, operacao)
 
-        e.pontos = (int)e.pontos + pontos
-        if (e.pontos < 50000) {
-            e.categoria = "bronze"
-        } else if (e.pontos >= 50000 && e.pontos < 150000) {
-            e.categoria = "prata"
-        } else if (e.pontos >= 150000) {
-            e.categoria = "ouro"
+        def novaPontuacao = (int)e.pontos + pontos
+        def bonus = 0
+        def pagarBonus = null
+        def novaCategoria = null
+
+        if (novaPontuacao < 50000) {
+            novaCategoria = "bronze"
+            bonus = 100
+        } else if (novaPontuacao >= 50000 && novaPontuacao< 150000) {
+            novaCategoria = "prata"
+            bonus = 150
+        } else if (novaPontuacao >= 150000) {
+            novaCategoria = "ouro"
+            bonus = 200
         }
+
+        if ((int)(novaPontuacao / 10000) > (int)(e.pontos / 10000)) {
+            e.bonus += bonus
+
+            operacao = 'Pagou bônus de R$' + bonus
+            new Logs().add(id, e.nome, operacao)
+
+            pagarBonus = bonus
+        }
+
+        if (novaCategoria != e.categoria) {
+            e.categoria = novaCategoria
+        } else {
+            novaCategoria = null
+        }
+
+        e.pontos = novaPontuacao
+        e.lastUpdated = (new Clock()).getDateTime()
         e.save()
+        return [pagarBonus:pagarBonus, novaCategoria:novaCategoria]
     }
 
     private def prepareGroups(groups) {

@@ -32,6 +32,7 @@
                   <th data-sort-initial="true">Nome</th>
                   <th data-sort-ignore="true">Celular</th>
                   <th data-type="numeric">Pontos</th>
+                  <th data-type="numeric">Bônus</th>
                   <th data-sort-ignore="true">Grupo(s)</th>
                   <th data-sort-ignore="true">&nbsp;</th>
                </tr>
@@ -42,7 +43,8 @@
                      <!--<td><a href="/motorista/edit/${motorista.key.id}"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;&nbsp;<a href="/motorista/delete/${motorista.key.id}" style="color:red"><i class="fa fa-trash-o"></i></a</td>-->
                      <td><div class="draggable">${motorista.nome}</div></td>
                      <td>${motorista.celular}</td>
-                     <td><span class="badge ${motorista.categoria}">${motorista.pontos}</span></td>
+                     <td><span class="badge ${motorista.categoria}"><i class="fa fa-certificate"></i> ${motorista.pontos}</span></td>
+                     <td><span class="badge bonus"><i class="fa fa-money"></i> ${motorista.bonus}</span></td>
                      <td><% motorista.groups.each { group -> %> <a href="#"><span class="badge">$group</span></a><%}%></td>
                      <td>
                     <a class='btn btn-primary btn-xs' href="/motorista/view/${motorista.key.id}"><i class="fa fa-eye"></i> ver</a>

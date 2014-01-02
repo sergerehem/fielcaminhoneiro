@@ -4,9 +4,7 @@ if (user == null) {
     redirect "/"
 } else {
     def model = new Motoristas()
-    model.addPontos(params.id, params.pontos as Integer, params.regiao)
+    def ret = model.addPontos(params.id, params.pontos as Integer, params.regiao)
 
-    request.motorista = params.id
-
-    forward '/controller/motorista/editMotorista.groovy'
+    redirect "/motorista/edit/${params.id}?view=${params.view}&pagarBonus=${ret.pagarBonus}&novaCategoria=${ret.novaCategoria}"
 }
