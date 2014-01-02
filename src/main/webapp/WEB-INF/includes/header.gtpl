@@ -63,7 +63,7 @@
                 <li><a href="${users.createLogoutURL('/')}"><i class="fa fa-power-off"></i> Log Out</a></li>
               </ul>
 							<%} else {%>
-							<a href="/login?continueTo=${request.queryUrl}">login</a>
+							<a href="/login?continueTo=http://fielcaminhoneiro.appspot.com">login</a>
 						<%}%>
             </li>
           </ul>

@@ -4,5 +4,5 @@ if (user != null) {
 	forward "/"
 } else {
 	url = params.continueTo ?: request.queryString
-	redirect users.createLoginURL(url ?: 	request.requestURI,"www.normandotransportes.com.br") 
+	redirect users.createLoginURL(url ?: 	request.requestURI,"teste.fielcaminhoneiro.appspot.com") 
 }

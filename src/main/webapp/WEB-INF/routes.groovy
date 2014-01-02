@@ -1,9 +1,11 @@
 get "/favicon.ico", redirect: "/img/favicon.ico"
 
-get "/", forward: "/ranking"
+get "/", forward: "/WEB-INF/pages/index.gtpl"
 
 // LOGIN
 get "/login", forward: "/controller/login/login.groovy"
+// RANKING
+get "/ranking",          forward: "/controller/motorista/rankingMotorista.groovy"
 
 // MOTORISTAS
 get "/motoristas", 							forward: "/controller/motorista/listMotorista.groovy"
@@ -29,5 +31,4 @@ post "/grupo/update",         	forward: "/controller/grupo/updateGroup.groovy"
 get "/pontos", 				   forward: "/controller/pontos/listPontos.groovy"
 get "/pontos/add/@id/@pontos", forward: "/controller/pontos/addPontos.groovy?id=@id&pontos=@pontos"
 
-// RANKING
-get "/ranking",          forward: "/controller/motorista/rankingMotorista.groovy"
+
