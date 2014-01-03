@@ -84,7 +84,7 @@
       <div class="thumbnail">
         <%
         %>
-        <img src="/img/${categoria}.png" alt="Clube Fiel Caminhoneiro Bronze">
+        <img src="/img/${categoria}.png" class="img-thumbnail" alt="Clube Fiel Caminhoneiro Bronze">
         <%
         %>
         <div class="progress">
@@ -95,23 +95,26 @@
         <div class="caption">
             <div class="row">
                 <div class="col-lg-7">
-                    <span class="label $categoria label-lg" style="font-size: 18pt;"><i class="fa fa-certificate"></i> $pontos</span>
+                    <a href="#historico" onclick="filtrar('PONTOS');" class="btn-link"><span class="label $categoria label-lg" style="font-size: 18pt;"><i class="fa fa-certificate"></i> $pontos</span></a>
                 </div>
                 <div class="col-lg-5 pull-right">
-                    <span class="label label-success" style="font-size: 18pt;"><i class="fa fa-money"></i> $bonus</span>
+                    <a href="#historico" onclick="filtrar('BONUS');" class="btn-link"><span class="label label-success" style="font-size: 18pt;"><i class="fa fa-money"></i> $bonus</span></a>
                 </div>
             </div>
-              <hr>
-              <p>Faltam <strong>$dif</strong> pontos para mudar de categoria...</p>
-        <!-- Button trigger modal -->
-        <button id="adicionarPontosBtn" class="btn <%if (categoria == "prata"){%>btn-primary<%}else{%>btn-warning<%}%>" data-toggle="modal" data-target="#myModal">
-          Adicionar Pontos
-        </button>
-        <a href="#historico" class="btn">
-          Ver Histórico
-        </a>
         </div>
-      </div>
+        <div class="caption">
+              <p>Faltam <strong>$dif</strong> pontos para mudar de categoria...</p>
+            <!-- Button trigger modal -->
+            <button id="adicionarPontosBtn" class="btn <%if (categoria == "prata"){%>btn-primary<%}else{%>btn-warning<%}%>" data-toggle="modal" data-target="#myModal">
+              Adicionar Pontos
+            </button>
+            <a href="#historico" class="btn">
+              Ver Histórico
+            </a>
+
+            <span class="label label-success label-lg" style="font-size: 12pt;"><i class="fa fa-thumbs-o-up"></i> <span class="badge">3</span></span>
+            <span class="label label-danger" style="font-size: 12pt;"><i class="fa fa-thumbs-o-down"></i> 1</span>
+        </div>
   </div>
 </div>
 
@@ -121,23 +124,34 @@
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#historico" href="#collapseOne">
-          Histórico
+          Histórico <span id="filtro" class="badge">todos<span>&nbsp;&nbsp;<a href="#" id="limpar" onclick="limpar();">&nbsp;&nbsp;<span class="badge">limpar filtro<span></a>
         </a>
       </h4>
     </div>
     <div id="collapseOne" class="panel-collapse collapse in">
       <div class="table-responsive">
-        <table class="table table-striped footable default" data-page-navigation=".pagination" data-page-size="10">
+        <table id="tableHistorico" class="table table-striped footable default" data-page-navigation=".pagination" data-page-size="10">
             <thead>
                 <th data-sort-ignore="true">Data/hora</th>
                 <th data-sort-ignore="true">Usuário</th>
-                <th data-sort-ignore="true">Operação</th>
+                <th data-sort-ignore="true">Tipo</th>
+                <th data-sort-ignore="true">Descrição</th>
             </thead>
             <tbody>
-            <% request.log.each { log -> %>
+            <% request.log.each { log ->
+                label = ""
+                if (log.tipo == "PONTOS") {
+                    tipo = 'certificate'
+                    label = "$categoria"
+                } else if (log.tipo == "BONUS") {
+                    tipo = 'money'
+                    label = 'label-success'
+                }
+                %>
                 <tr>
                     <td>$log.dateCreated</td>
                     <td>$log.userEmail</td>
+                    <td><span class="label $label"><i class="fa fa-$tipo"></i> $log.tipo<span></td>
                     <td>$log.operacao</td>
                 </tr>
             <% } %>
@@ -188,4 +202,26 @@ document.onreadystatechange = function () {
 }
 </script>
 <%}%>
+<script type="text/javascript">
+
+(jQuery)(document).ready(function(){
+    (jQuery)('#filtro').hide();
+    (jQuery)('#limpar').hide();
+});
+
+function filtrar(filtro) {
+    (jQuery)('#tableHistorico').trigger('footable_filter', {filter: filtro});
+    (jQuery)('#filtro').html(filtro);
+    (jQuery)('#filtro').show();
+    (jQuery)('#limpar').show();
+}
+
+function limpar() {
+    (jQuery)('#tableHistorico').trigger('footable_clear_filter');
+    (jQuery)('#filtro').html('todos');
+    (jQuery)('#filtro').hide();
+    (jQuery)('#limpar').hide();
+}
+</script>
 <% include '/WEB-INF/includes/footer.gtpl' %>
+

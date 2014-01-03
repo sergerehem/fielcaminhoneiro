@@ -30,6 +30,7 @@
 
 <!--    <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script> -->
 
+    <script src="/js/jquery-1.10.2.js"></script>
   </head>
 
   <body>
@@ -55,6 +56,7 @@
 						<li><a href="/motoristas"><i class="fa fa-user"></i> Motoristas</a></li>
 						<li><a href="/grupos"><i class="fa fa-users"></i> Grupos</a></li>
 						<li><a href="/pontos"><i class="fa fa-certificate"></i> Pontos</a></li>
+						<li><a href="/dashboard"><i class="fa fa-dashboard"></i> Painel de Controle</a></li>
 						<%}%>
             <li class="dropdown user-dropdown">
 							<%if (user != null) {%>

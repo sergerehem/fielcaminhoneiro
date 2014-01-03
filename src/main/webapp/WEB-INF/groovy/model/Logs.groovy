@@ -25,25 +25,32 @@ public class Logs {
     }
 
     def delete(id) {
-        Key key = KeyFactory.createKey("motorista", Long.parseLong(id))
-        key.delete()
+        datastore.withTransaction {
+            Key key = KeyFactory.createKey("motorista", Long.parseLong(id))
+            key.delete()
+        }
     }
 
     def update(id, nome, celular, grupos) {
-        def e = get(id)
-        e.nome = nome
-        e.celular = celular
-        e.groups = prepareGroups(groups)
-        e.save()
+        datastore.withTransaction {
+            def e = get(id)
+            e.nome = nome
+            e.celular = celular
+            e.groups = prepareGroups(groups)
+            e.save()
+        }
     }
 
-    def add(idMotorista, nomeMotorista, operacao) {
-        def e = new Entity("log")
-        e.idMotorista = idMotorista
-        e.nomeMotorista = nomeMotorista
-        e.operacao = operacao
-        e.userEmail = user.nickname
-        e.dateCreated = (new Clock()).getDateTime()
-        e.save()
+    def add(idMotorista, nomeMotorista, tipo, operacao) {
+        datastore.withTransaction {
+            def e = new Entity("log")
+            e.idMotorista = idMotorista
+            e.nomeMotorista = nomeMotorista
+            e.tipo = tipo
+            e.operacao = operacao
+            e.userEmail = user.nickname
+            e.dateCreated = (new Clock()).getDateTime()
+            e.save()
+        }
     }
 }

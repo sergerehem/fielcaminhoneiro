@@ -1,8 +1,8 @@
-<!-- Indices written at Thu, 2 Jan 2014 18:36:30 BRT -->
+<!-- Indices written at Fri, 3 Jan 2014 16:13:04 BRT -->
 
 <datastore-indexes>
 
-    <!-- Used 158 times in query history -->
+    <!-- Used 95 times in query history -->
     <datastore-index kind="log" ancestor="false" source="auto">
         <property name="idMotorista" direction="asc"/>
         <property name="dateCreated" direction="desc"/>

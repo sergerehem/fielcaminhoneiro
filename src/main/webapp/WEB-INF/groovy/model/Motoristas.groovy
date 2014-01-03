@@ -59,58 +59,62 @@ public class Motoristas {
     }
 
     def delete(id) {
-        Key key = KeyFactory.createKey("motorista", Long.parseLong(id))
-        key.delete()
+        datastore.withTransaction(true) {
+            def e = get(id)
+
+            new Dashboard().subtract("total_pontos", e.pontos)
+            new Dashboard().subtract("total_bonus", e.bonus)
+            new Dashboard().subtract("total_${e.categoria}", 1)
+
+            Key key = KeyFactory.createKey("motorista", Long.parseLong(id))
+            key.delete()
+        }
     }
 
     def update(id, nome, celular, groups) {
-        //datastore.withTransaction {
-        def e = get(id)
+        datastore.withTransaction(true) {
+            def e = get(id)
 
-        def operacao = "Atualizou "
-        if (nome != e.nome) operacao += "NOME de '$e.nome' para '$nome;' "
-        if (celular != e.celular) operacao += "CELULAR de $e.celular para $celular; "
-        if (pontos != e.pontos) operacao += "PONTOS de $e.pontos para $pontos; "
-        new Logs().add(id, nome, operacao)
+            def operacao = "Atualizou "
+            if (nome != e.nome) operacao += "NOME de '$e.nome' para '$nome;' "
+            if (celular != e.celular) operacao += "CELULAR de $e.celular para $celular; "
+            new Logs().add(id, nome, "ALTERAÇÃO" , operacao)
 
-        e.nome = nome
-        e.celular = celular
-        e.groups = prepareGroups(groups)
-        e.lastUpdated = (new Clock()).getDateTime()
-        e.save()
-        //}
+            e.nome = nome
+            e.celular = celular
+            e.groups = prepareGroups(groups)
+            e.lastUpdated = (new Clock()).getDateTime()
+            e.save()
+        }
     }
 
     def add(nome, celular, groups) {
-        def e = new Entity("motorista")
-        e.nome = nome
-        e.celular = celular
-        e.pontos = 0
-        e.bonus = 0
-        e.categoria = "bronze"
-        e.groups = prepareGroups(groups)
-        e.dateCreated = (new Clock()).getDateTime()
-        e.lastUpdated = e.dateCreated
-        e.userEmail = user.nickname
-        e.save()
+        datastore.withTransaction(true) {
+            def e = new Entity("motorista")
+            e.nome = nome
+            e.celular = celular
+            e.pontos = 0
+            e.bonus = 0
+            e.categoria = "bronze"
+            e.groups = prepareGroups(groups)
+            e.dateCreated = (new Clock()).getDateTime()
+            e.lastUpdated = e.dateCreated
+            e.userEmail = user.nickname
+            e.save()
+
+            new Dashboard().add("total_bronze", 1)
+        }
     }
 
     def addPontos(id, pontos, regiao) {
-        //datastore.withTransaction {
         def e = get(id)
 
-        def operacao = "Adicionou $pontos pontos ($regiao); "
-        new Logs().add(id, e.nome, operacao)
-
-        def novaPontuacao = (int)e.pontos + pontos
-        def bonus = 0
         def pagarBonus = null
-        def novaCategoria = null
+        int bonus = 100
+        def novaCategoria = "bronze"
+        int novaPontuacao = (int)e.pontos + pontos
 
-        if (novaPontuacao < 50000) {
-            novaCategoria = "bronze"
-            bonus = 100
-        } else if (novaPontuacao >= 50000 && novaPontuacao< 150000) {
+        if (novaPontuacao >= 50000 && novaPontuacao< 150000) {
             novaCategoria = "prata"
             bonus = 150
         } else if (novaPontuacao >= 150000) {
@@ -118,24 +122,35 @@ public class Motoristas {
             bonus = 200
         }
 
-        if ((int)(novaPontuacao / 10000) > (int)(e.pontos / 10000)) {
-            e.bonus += bonus
+        datastore.withTransaction(true) {
 
-            operacao = 'Pagou bônus de R$' + bonus
-            new Logs().add(id, e.nome, operacao)
+            def operacao = "Adicionou $pontos pontos ($regiao); "
+            new Logs().add(id, e.nome, "PONTOS", operacao)
+            new Dashboard().add("total_pontos", pontos)
 
-            pagarBonus = bonus
+            if ((int)(novaPontuacao / 10000) > (int)(e.pontos / 10000)) {
+                e.bonus += bonus
+
+                operacao = 'Pagou bônus de R$' + bonus
+                new Logs().add(id, e.nome, "BONUS", operacao)
+
+                pagarBonus = bonus
+
+                new Dashboard().add("total_bonus", bonus)
+            }
+
+            if (novaCategoria != e.categoria) {
+                new Dashboard().subtract("total_${e.categoria}", 1)
+                new Dashboard().add("total_$novaCategoria", 1)
+                e.categoria = novaCategoria
+            } else {
+                novaCategoria = null
+            }
+
+            e.pontos = novaPontuacao
+            e.lastUpdated = (new Clock()).getDateTime()
+            e.save()
         }
-
-        if (novaCategoria != e.categoria) {
-            e.categoria = novaCategoria
-        } else {
-            novaCategoria = null
-        }
-
-        e.pontos = novaPontuacao
-        e.lastUpdated = (new Clock()).getDateTime()
-        e.save()
         return [pagarBonus:pagarBonus, novaCategoria:novaCategoria]
     }
 
