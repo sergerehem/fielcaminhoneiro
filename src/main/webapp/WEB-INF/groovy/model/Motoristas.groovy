@@ -186,7 +186,7 @@ public class Motoristas {
         datastore.withTransaction(true) {
             new Logs().add(id, e.nome, "CURTI", texto)
             //new Dashboard().add("total_pontos", pontos)
-            e.curti += 1
+            e.curti =  (e.curti!=null?e.curti:0) + 1
             e.lastUpdated = (new Clock()).getDateTime()
             e.save()
         }
@@ -197,7 +197,7 @@ public class Motoristas {
         datastore.withTransaction(true) {
             new Logs().add(id, e.nome, "NÃO CURTI", texto)
             //new Dashboard().add("total_pontos", pontos)
-            e.naoCurti += 1
+            e.naoCurti = (e.naoCurti!=null?e.naoCurti:0) + 1
             e.lastUpdated = (new Clock()).getDateTime()
             e.save()
         }

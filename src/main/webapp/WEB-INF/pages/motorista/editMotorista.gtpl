@@ -112,8 +112,8 @@
               Ver Histórico
             </a>
 
-            <a href="#" data-toggle="modal" data-target="#formCurti"><span  class="label label-primary label-lg" style="font-size: 12pt;"><i class="fa fa-thumbs-o-up"></i> ${motorista.curti}</span></a>
-            <span data-toggle="modal" data-target="#formNaoCurti" class="label label-danger" style="font-size: 12pt;"><i class="fa fa-thumbs-o-down"></i> ${motorista.naoCurti}</span>
+            <a href="#" id="curtiBtn" data-toggle="modal" data-target="#formCurti"><span  class="label label-primary label-lg" style="font-size: 12pt;"><i class="fa fa-thumbs-o-up"></i> <%if (motorista?.curti != null && motorista?.curti != 0){%>${motorista.curti}<%}%></a>&nbsp;
+            <a href="#" id="naoCurtiBtn" data-toggle="modal" data-target="#formNaoCurti" class="label label-danger" style="font-size: 12pt;"><i class="fa fa-thumbs-o-down"></i> <%if (motorista?.naoCurti != null && motorista?.naoCurti != 0){%>${motorista.naoCurti}<%}%></a>
         </div>
   </div>
 </div>
@@ -124,8 +124,16 @@
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#historico" href="#collapseOne">
-          Histórico <span id="filtro" class="badge">todos<span>&nbsp;&nbsp;<a href="#" id="limpar" onclick="limpar();">&nbsp;&nbsp;<span class="badge">limpar filtro<span></a>
+          Histórico
+          <!--<span id="filtro" class="badge">todos<span>&nbsp;&nbsp;<a href="#" id="limpar" onclick="limpar();">&nbsp;&nbsp;<span class="badge">limpar filtro<span></a>-->
         </a>
+          <select id="filtroSelect">
+            <option>-- TODOS --</option>
+            <option>PONTOS</option>
+            <option>BONUS</option>
+            <option>CURTI</option>
+            <option>NÃO CURTI</option>
+          </select>
       </h4>
     </div>
     <div id="collapseOne" class="panel-collapse collapse in">
@@ -153,6 +161,8 @@
                 } else if (log.tipo == "NÃO CURTI") {
                     tipo = 'thumbs-o-down'
                     label = 'label-danger'
+                } else {
+                    label = "label-default"
                 }
                 %>
                 <tr>
@@ -242,7 +252,7 @@
           <input type="hidden" name="id" value="${motorista.key.id}">
           <input type="hidden" name="view" value="${request.view}">
           <div class="form-group">
-            <textarea name="texto" class="form-control" placeholder="O que você curtiu com relação a esse Motorista?" rows="5" required></textarea>
+            <textarea name="texto" class="form-control" placeholder="O que você não curtiu com relação a esse Motorista?" rows="5" required></textarea>
           </div>
           <div class="panel-footer">
             <div class="row">
@@ -270,26 +280,65 @@ document.onreadystatechange = function () {
 }
 </script>
 <%}%>
+  ${request.addCurti}
+<%if (request.addCurti == 'true') {%>
+<script type="text/javascript">
+document.onreadystatechange = function () {
+  if (document.readyState === "complete") {
+    document.getElementById("curtiBtn").click();
+  }
+}
+</script>
+<%}%>
+
+<%if (request.addNaoCurti == 'true') {%>
+<script type="text/javascript">
+document.onreadystatechange = function () {
+  if (document.readyState === "complete") {
+    document.getElementById("naoCurtiBtn").click();
+  }
+}
+</script>
+<%}%>
+
 <script type="text/javascript">
 
+/*
 (jQuery)(document).ready(function(){
     (jQuery)('#filtro').hide();
     (jQuery)('#limpar').hide();
 });
+*/
+
+(jQuery)('#filtroSelect').change(function(e) {
+    e.preventDefault();
+    var filtro = (jQuery)(this).find('option:selected').val();
+    //alert(filtro.val());
+    if (filtro == "-- TODOS --" )
+        limpar();
+    else
+        filtrar(filtro);
+});
 
 function filtrar(filtro) {
     (jQuery)('#tableHistorico').trigger('footable_filter', {filter: filtro});
+    /*
     (jQuery)('#filtro').html(filtro);
     (jQuery)('#filtro').show();
     (jQuery)('#limpar').show();
+    */
 }
+
 
 function limpar() {
     (jQuery)('#tableHistorico').trigger('footable_clear_filter');
+    /*
     (jQuery)('#filtro').html('todos');
     (jQuery)('#filtro').hide();
     (jQuery)('#limpar').hide();
+    */
 }
+
 </script>
 <% include '/WEB-INF/includes/footer.gtpl' %>
 

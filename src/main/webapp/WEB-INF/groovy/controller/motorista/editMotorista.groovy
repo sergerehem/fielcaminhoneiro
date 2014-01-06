@@ -12,12 +12,12 @@ if (user == null) {
   }
 
   request.groups = new Groups().list()
-
   request.pontos = new Pontos().list()
 
   request.view = params.view ?: false
-
   request.addPontos = params.addPontos ?: false
+  request.addCurti = params.addCurti ?: false
+  request.addNaoCurti = params.addNaoCurti ?: false
 
   forward '/WEB-INF/pages/motorista/editMotorista.gtpl'
 }

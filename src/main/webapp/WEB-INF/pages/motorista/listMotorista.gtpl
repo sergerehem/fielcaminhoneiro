@@ -52,8 +52,8 @@
                     <a class='btn btn-danger btn-xs' onclick="if (!confirm('Todos os dados deste motorista serão excluídos. Tem certeza que deseja EXCLUIR o motorista?')) return false;" href="/motorista/delete/${motorista.key.id}"><i class="fa fa-trash-o"></i> excluir</a>
                     &nbsp;|&nbsp;
                     <a class='btn btn-warning btn-xs' href="/motorista/view/${motorista.key.id}?addPontos=true"><i class="fa fa-certificate"></i> adicionar pontos</a>
-                    <a class='btn btn-success btn-xs' href="/motorista/view/${motorista.key.id}?addPontos=true"><i class="fa fa-thumbs-o-up"></i> curti <span class="badge">3</span></a>
-                    <a class='btn btn-danger btn-xs' href="/motorista/view/${motorista.key.id}?addPontos=true"><i class="fa fa-thumbs-o-down"></i> não curti <span class="badge">1</span></a>
+                    <a class='btn btn-primary btn-xs' href="/motorista/view/${motorista.key.id}?addCurti=true"><i class="fa fa-thumbs-o-up"></i> <%if (motorista.curti != null && motorista.curti != 0){%> ${motorista.curti}</span><%}%></a>
+                    <a class='btn btn-danger btn-xs' href="/motorista/view/${motorista.key.id}?addNaoCurti=true"><i class="fa fa-thumbs-o-down"></i> <%if (motorista.naoCurti != null && motorista.naoCurti != 0){%> ${motorista.naoCurti}<%}%></a>
                     </td>
                   </tr>
                <% } %>
