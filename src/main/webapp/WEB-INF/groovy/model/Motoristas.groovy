@@ -50,6 +50,31 @@ public class Motoristas {
         }
     }
 
+    def listByBonus() {
+        datastore.execute {
+            select all
+            from motorista
+            where bonus > 0
+            sort desc by bonus
+        }
+    }
+
+    def listByPontos() {
+        datastore.execute {
+            select all
+            from motorista
+            where pontos > 0
+            sort desc by pontos
+        }
+    }
+
+    def count() {
+        datastore.execute {
+            select count
+            from motorista
+        }
+    }
+
     def countByGroup(group) {
         datastore.execute {
             select count
@@ -95,6 +120,8 @@ public class Motoristas {
             e.celular = celular
             e.pontos = 0
             e.bonus = 0
+            e.curti = 0
+            e.naoCurti = 0
             e.categoria = "bronze"
             e.groups = prepareGroups(groups)
             e.dateCreated = (new Clock()).getDateTime()
@@ -152,6 +179,28 @@ public class Motoristas {
             e.save()
         }
         return [pagarBonus:pagarBonus, novaCategoria:novaCategoria]
+    }
+
+    def addCurti(id, texto) {
+        def e = get(id)
+        datastore.withTransaction(true) {
+            new Logs().add(id, e.nome, "CURTI", texto)
+            //new Dashboard().add("total_pontos", pontos)
+            e.curti += 1
+            e.lastUpdated = (new Clock()).getDateTime()
+            e.save()
+        }
+    }
+
+    def addNaoCurti(id, texto) {
+        def e = get(id)
+        datastore.withTransaction(true) {
+            new Logs().add(id, e.nome, "NÃO CURTI", texto)
+            //new Dashboard().add("total_pontos", pontos)
+            e.naoCurti += 1
+            e.lastUpdated = (new Clock()).getDateTime()
+            e.save()
+        }
     }
 
     private def prepareGroups(groups) {

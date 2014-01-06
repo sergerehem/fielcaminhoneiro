@@ -4,9 +4,19 @@ if (user == null) {
 	redirect "/"
 } else {
   if (params.group) {
+    request.filter = "grupo $params.group"
     request.motoristas = new Motoristas().listByGroup(params.group)
   } else {
-    request.motoristas = new Motoristas().list()
+    if (params.pontos) {
+        request.filter = "que possuem pontos"
+        request.motoristas = new Motoristas().listByPontos()
+    } else if (params.bonus == 'true') {
+        request.filter = "que já ganharam bônus"
+        request.motoristas = new Motoristas().listByBonus()
+    } else {
+        request.filter = "todos"
+        request.motoristas = new Motoristas().list()
+    }
   }
   
   def groups = []

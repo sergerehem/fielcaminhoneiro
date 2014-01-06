@@ -3,7 +3,7 @@
 
 
 	<div class="row">
-	    <h1 class="page-header">Motorista <small>listar</small></h1>
+	    <h1 class="page-header">Motorista <small><%=request.filter%></small></h1>
     </div>
 
     <div class="row">
@@ -25,10 +25,10 @@
 
     <div class="row">
         <div id="tableContatos" class="table-responsive">
-          <table class="table table-striped footable default" data-page-navigation=".pagination" data-page-size="20" data-filter="#search">
+          <table class="table table-striped footable default" data-page-navigation=".pagination" data-page-size="15" data-filter="#search">
             <thead>
                <tr>
-                  <th data-sort-initial="true">Nome</th>
+                  <th<%if (!request.filter){%>data-sort-initial="true"<%}%>>Nome</th>
                   <th data-sort-ignore="true">Celular</th>
                   <th data-sort-ignore="true">Cartão</th>
                   <th data-type="numeric">Pontos</th>
@@ -51,9 +51,9 @@
                     <a class='btn btn-info btn-xs' href="/motorista/edit/${motorista.key.id}"><i class="fa fa-pencil-square-o"	></i> alterar</a>
                     <a class='btn btn-danger btn-xs' onclick="if (!confirm('Todos os dados deste motorista serão excluídos. Tem certeza que deseja EXCLUIR o motorista?')) return false;" href="/motorista/delete/${motorista.key.id}"><i class="fa fa-trash-o"></i> excluir</a>
                     &nbsp;|&nbsp;
-                    <a class='btn btn-warning btn-xs'href="/motorista/view/${motorista.key.id}?addPontos=true"><i class="fa fa-certificate"></i> adicionar pontos</a>
-                    <a class='btn btn-success btn-xs'href="/motorista/view/${motorista.key.id}?addPontos=true"><i class="fa fa-thumbs-o-up"></i> curti <span class="badge">3</span></a>
-                    <a class='btn btn-danger btn-xs'href="/motorista/view/${motorista.key.id}?addPontos=true"><i class="fa fa-thumbs-o-down"></i> não curti <span class="badge">1</span></a>
+                    <a class='btn btn-warning btn-xs' href="/motorista/view/${motorista.key.id}?addPontos=true"><i class="fa fa-certificate"></i> adicionar pontos</a>
+                    <a class='btn btn-success btn-xs' href="/motorista/view/${motorista.key.id}?addPontos=true"><i class="fa fa-thumbs-o-up"></i> curti <span class="badge">3</span></a>
+                    <a class='btn btn-danger btn-xs' href="/motorista/view/${motorista.key.id}?addPontos=true"><i class="fa fa-thumbs-o-down"></i> não curti <span class="badge">1</span></a>
                     </td>
                   </tr>
                <% } %>

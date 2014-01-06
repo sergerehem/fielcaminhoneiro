@@ -12,7 +12,7 @@ public class Dashboard {
     def get() {
         def e = datastore.execute {
             select single
-            from dashboard
+            from 'dashboard'
         }
 
         if (e == null) {
@@ -29,14 +29,6 @@ public class Dashboard {
         }
 
         return e
-    }
-
-    def list() {
-        datastore.execute {
-            select single
-            from dashboard
-            sort asc by name
-        }
     }
 
     /*

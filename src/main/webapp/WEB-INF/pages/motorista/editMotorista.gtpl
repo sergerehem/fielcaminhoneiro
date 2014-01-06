@@ -105,15 +105,15 @@
         <div class="caption">
               <p>Faltam <strong>$dif</strong> pontos para mudar de categoria...</p>
             <!-- Button trigger modal -->
-            <button id="adicionarPontosBtn" class="btn <%if (categoria == "prata"){%>btn-primary<%}else{%>btn-warning<%}%>" data-toggle="modal" data-target="#myModal">
+            <button id="adicionarPontosBtn" class="btn <%if (categoria == "prata"){%>btn-primary<%}else{%>btn-warning<%}%>" data-toggle="modal" data-target="#formAdicionarPontos">
               Adicionar Pontos
             </button>
             <a href="#historico" class="btn">
               Ver Histórico
             </a>
 
-            <span class="label label-success label-lg" style="font-size: 12pt;"><i class="fa fa-thumbs-o-up"></i> <span class="badge">3</span></span>
-            <span class="label label-danger" style="font-size: 12pt;"><i class="fa fa-thumbs-o-down"></i> 1</span>
+            <a href="#" data-toggle="modal" data-target="#formCurti"><span  class="label label-primary label-lg" style="font-size: 12pt;"><i class="fa fa-thumbs-o-up"></i> ${motorista.curti}</span></a>
+            <span data-toggle="modal" data-target="#formNaoCurti" class="label label-danger" style="font-size: 12pt;"><i class="fa fa-thumbs-o-down"></i> ${motorista.naoCurti}</span>
         </div>
   </div>
 </div>
@@ -140,12 +140,19 @@
             <tbody>
             <% request.log.each { log ->
                 label = ""
+                tipo = ""
                 if (log.tipo == "PONTOS") {
                     tipo = 'certificate'
                     label = "$categoria"
                 } else if (log.tipo == "BONUS") {
                     tipo = 'money'
                     label = 'label-success'
+                } else if (log.tipo == "CURTI") {
+                    tipo = 'thumbs-o-up'
+                    label = 'label-primary'
+                } else if (log.tipo == "NÃO CURTI") {
+                    tipo = 'thumbs-o-down'
+                    label = 'label-danger'
                 }
                 %>
                 <tr>
@@ -169,9 +176,9 @@
   </div>
 </div><% } %>
 
-<!-- Modal -->
+<!-- Adicionar Pontos Modal -->
 <% if (motorista != null) { %>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="formAdicionarPontos" tabindex="-1" role="dialog" aria-labelledby="formAdicionarPontosLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -179,8 +186,9 @@
         <h4 class="modal-title">Adicionar Pontos</h4>
       </div>
       <div class="modal-body">
-       <% request.pontos.each { ponto ->
-            id = motorista.key.id
+      <%
+       id = motorista.key.id
+       request.pontos.each { ponto ->
             pontos = ponto.value
             regiao = ponto.key
             msg = "Confirma a inclusão de $pontos pontos ($regiao)?"
@@ -188,6 +196,66 @@
             <h4><a href="/pontos/add/$id/$pontos?regiao=$regiao&view=${request.view}" onclick="if (!confirm('$msg')) return false;"><span class="badge">$pontos</span> $regiao</a></h4>
        <% } %>
       </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="formCurti" tabindex="-1" role="dialog" aria-labelledby="formCurtiLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><span class="label label-primary"><i class="fa fa-thumbs-o-up"></i></span> Curti</h4>
+      </div>
+      <form action="/curti" method="post">
+          <fieldset>
+          <input type="hidden" name="id" value="${motorista.key.id}">
+          <input type="hidden" name="view" value="${request.view}">
+          <div class="form-group">
+            <textarea name="texto" class="form-control" placeholder="O que você curtiu com relação a esse Motorista?" rows="5" required></textarea>
+          </div>
+          <div class="panel-footer">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <button type="submit" class="btn btn-labeled btn-primary">
+                        <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span> Confirmar</a>
+                </div>
+            </div>
+          </div>
+          </fieldset>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="formNaoCurti" tabindex="-1" role="dialog" aria-labelledby="formNaoCurtiLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><span class="label label-danger"><i class="fa fa-thumbs-o-down"></i></span> Não Curti</h4>
+      </div>
+      <form action="/naocurti" method="post">
+          <fieldset>
+          <input type="hidden" name="id" value="${motorista.key.id}">
+          <input type="hidden" name="view" value="${request.view}">
+          <div class="form-group">
+            <textarea name="texto" class="form-control" placeholder="O que você curtiu com relação a esse Motorista?" rows="5" required></textarea>
+          </div>
+          <div class="panel-footer">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <button type="submit" class="btn btn-labeled btn-primary">
+                        <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span> Confirmar</a>
+                </div>
+            </div>
+          </div>
+          </fieldset>
+      </form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

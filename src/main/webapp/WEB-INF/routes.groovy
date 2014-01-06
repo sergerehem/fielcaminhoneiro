@@ -6,6 +6,9 @@ get "/", forward: "/WEB-INF/pages/index.gtpl"
 get "/login", forward: "/controller/login/login.groovy"
 // RANKING
 get "/ranking",          forward: "/controller/motorista/rankingMotorista.groovy"
+// RANKING
+get "/dashboard",          forward: "/controller/dashboard/dashboard.groovy"
+
 
 // MOTORISTAS
 get "/motoristas", 							forward: "/controller/motorista/listMotorista.groovy"
@@ -31,4 +34,7 @@ post "/grupo/update",         	forward: "/controller/grupo/updateGroup.groovy"
 get "/pontos", 				   forward: "/controller/pontos/listPontos.groovy"
 get "/pontos/add/@id/@pontos", forward: "/controller/pontos/addPontos.groovy?id=@id&pontos=@pontos"
 
+// FEEDBACK
+post "/curti",           forward: "/controller/feedback/addCurti.groovy"
+post "/naocurti",        forward: "/controller/feedback/addNaoCurti.groovy"
 
