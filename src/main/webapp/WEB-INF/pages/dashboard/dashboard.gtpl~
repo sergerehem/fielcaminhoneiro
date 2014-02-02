@@ -1,7 +1,7 @@
 <% include '/WEB-INF/includes/header.gtpl' %>
 
 <div class="row">
-  <h1 class="page-header">Clube Fiel Caminhoneiro <small>Painel de Controle</small></h1>
+  <h1>Clube Fiel Caminhoneiro <small>Painel de Controle</small></h1>
 </div><!-- /.row -->
 
 <div class="row">
