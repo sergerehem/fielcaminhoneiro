@@ -9,6 +9,9 @@ get "/ranking",          forward: "/controller/motorista/rankingMotorista.groovy
 // RANKING
 get "/dashboard",          forward: "/controller/dashboard/dashboard.groovy"
 
+// TWILIO
+get "/twilio", forward: "/twilio/twilio.groovy"
+get "/twilio_callback", forward: "/twilio/twilio_callback.groovy"
 
 // MOTORISTAS
 get "/motoristas", 							forward: "/controller/motorista/listMotorista.groovy"
