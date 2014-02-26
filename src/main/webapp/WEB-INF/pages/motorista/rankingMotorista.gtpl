@@ -18,10 +18,10 @@
           </div> <!--/input-group -->
         </div>
     </div>
-
+${request.motoristas.size()}
     <div class="row">
-        <div id="tableContatos" class="table-responsive">
-          <table class="table table-striped footable default" data-filter="#search">
+        <div id="divTableRanking" class="table-responsive">
+          <table id="tableRanking" class="table table-striped footable default" data-page-navigation=".pagination" data-page-size="50" data-filter="#search">
             <thead>
                <tr>
                   <th data-sort-ignore="true">#</th>
@@ -45,6 +45,13 @@
                   </tr>
                <% } %>
             </tbody>
+             <tfoot class="hide-if-no-paging">
+                <tr>
+                    <td colspan="5">
+                        <div class="pagination pagination-centered"></div>
+                    </td>
+                </tr>
+            </tfoot>
           </table>
         </div>
     </div>

@@ -192,6 +192,17 @@ public class Motoristas {
         }
     }
 
+    def addSMS(id, texto) {
+        def e = get(id)
+        datastore.withTransaction(true) {
+            new Logs().add(id, e.nome, "SMS", texto)
+            //new Dashboard().add("total_pontos", pontos)
+            e.lastSMS = texto
+            e.lastUpdated = (new Clock()).getDateTime()
+            e.save()
+        }
+    }
+
     def addNaoCurti(id, texto) {
         def e = get(id)
         datastore.withTransaction(true) {

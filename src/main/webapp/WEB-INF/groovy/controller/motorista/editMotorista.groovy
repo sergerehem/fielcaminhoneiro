@@ -18,6 +18,7 @@ if (user == null) {
   request.addPontos = params.addPontos ?: false
   request.addCurti = params.addCurti ?: false
   request.addNaoCurti = params.addNaoCurti ?: false
+  request.sms = params.sms ?: false
 
   forward '/WEB-INF/pages/motorista/editMotorista.gtpl'
 }

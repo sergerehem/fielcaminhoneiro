@@ -10,6 +10,7 @@ get "/ranking",          forward: "/controller/motorista/rankingMotorista.groovy
 get "/dashboard",          forward: "/controller/dashboard/dashboard.groovy"
 
 // TWILIO
+get "/ranking/json",          forward: "/controller/motorista/rankingMotoristaJson.groovy"
 get "/twilio", forward: "/twilio/twilio.groovy"
 get "/twilio_callback", forward: "/twilio/twilio_callback.groovy"
 
@@ -40,4 +41,5 @@ get "/pontos/add/@id/@pontos", forward: "/controller/pontos/addPontos.groovy?id=
 // FEEDBACK
 post "/curti",           forward: "/controller/feedback/addCurti.groovy"
 post "/naocurti",        forward: "/controller/feedback/addNaoCurti.groovy"
+post "/sms",        forward: "/controller/sms/send.groovy"
 

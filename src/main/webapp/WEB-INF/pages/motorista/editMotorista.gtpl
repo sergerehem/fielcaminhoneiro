@@ -3,7 +3,7 @@
 <%
   def motorista = request.getAttribute("motorista")
   boolean existingKey = motorista?.key
-  String action = !existingKey ? 'Incluir' : 'Atualizar'
+  String action = !existingKey ? 'Incluir' : request.view ? 'Visualização' : 'Alteração'
 %>
 
 <div class="row">
@@ -21,6 +21,12 @@
 <div class="alert alert-success alert-dismissable">
   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
   <strong style="font-size:20pt;">BÔNUS!!!</strong> Pague agora <span class="label label-success" style="font-size: 18pt;"><i class="fa fa-money"></i> $params.pagarBonus</span> ao motorista porque ele completou <span style="font-size:20pt;" class="label ${motorista.categoria}"><i class="fa fa-certificate"></i> ${motorista?.pontos}</span> pontos!!!</strong>
+</div>
+<%}%>
+<%if (params.flush != null) { %>
+<div class="alert alert-info alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  $params.flush
 </div>
 <%}%>
 <div class="row">
@@ -113,7 +119,8 @@
             </a>
 
             <a href="#" id="curtiBtn" data-toggle="modal" data-target="#formCurti"><span  class="label label-primary label-lg" style="font-size: 12pt;"><i class="fa fa-thumbs-o-up"></i> <%if (motorista?.curti != null && motorista?.curti != 0){%>${motorista.curti}<%}%></a>&nbsp;
-            <a href="#" id="naoCurtiBtn" data-toggle="modal" data-target="#formNaoCurti" class="label label-danger" style="font-size: 12pt;"><i class="fa fa-thumbs-o-down"></i> <%if (motorista?.naoCurti != null && motorista?.naoCurti != 0){%>${motorista.naoCurti}<%}%></a>
+            <a href="#" id="naoCurtiBtn" data-toggle="modal" data-target="#formNaoCurti" class="label label-danger" style="font-size: 12pt;"><i class="fa fa-thumbs-o-down"></i> <%if (motorista?.naoCurti != null && motorista?.naoCurti != 0){%>${motorista.naoCurti}<%}%></a>&nbsp;
+            <a href="#" id="smsBtn" data-toggle="modal" data-target="#formSMS" class="label label-info" style="font-size: 12pt;"><i class="fa fa-comment"></i> SMS</a>
         </div>
   </div>
 </div>
@@ -140,10 +147,10 @@
       <div class="table-responsive">
         <table id="tableHistorico" class="table table-striped footable default" data-page-navigation=".pagination" data-page-size="10">
             <thead>
-                <th data-sort-ignore="true">Data/hora</th>
-                <th data-sort-ignore="true">Usuário</th>
-                <th data-sort-ignore="true">Tipo</th>
-                <th data-sort-ignore="true">Descrição</th>
+                <th>Data/hora</th>
+                <th>Usuário</th>
+                <th>Tipo</th>
+                <th>Descrição</th>
             </thead>
             <tbody>
             <% request.log.each { log ->
@@ -161,6 +168,9 @@
                 } else if (log.tipo == "NÃO CURTI") {
                     tipo = 'thumbs-o-down'
                     label = 'label-danger'
+                } else if (log.tipo == "SMS") {
+                    tipo = 'comments'
+                    label = 'label-info'
                 } else {
                     label = "label-default"
                 }
@@ -229,7 +239,7 @@
                 <div class="col-xs-6 col-sm-6 col-md-6">
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6">
-                    <button type="submit" class="btn btn-labeled btn-primary">
+                    <button type="submit" class="btn btn-labeled btn-success">
                         <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span> Confirmar</a>
                 </div>
             </div>
@@ -259,7 +269,7 @@
                 <div class="col-xs-6 col-sm-6 col-md-6">
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6">
-                    <button type="submit" class="btn btn-labeled btn-primary">
+                    <button type="submit" class="btn btn-labeled btn-success">
                         <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span> Confirmar</a>
                 </div>
             </div>
@@ -271,6 +281,37 @@
 </div><!-- /.modal -->
 <%}%>
 
+<div class="modal fade" id="formSMS" tabindex="-1" role="dialog" aria-labelledby="formSMSLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><span class="label label-info"><i class="fa fa-comments"></i></span> Enviar SMS para ${motorista.celular} </h4>
+      </div>
+      <form action="/sms" method="post">
+          <fieldset>
+          <input type="hidden" name="id" value="${motorista.key.id}">
+          <input type="hidden" name="celular" value="${motorista.celular}">
+          <input type="hidden" name="view" value="${request.view}">
+          <div class="form-group">
+            <textarea name="texto" class="form-control" placeholder="coloque aqui a sua mensagem SMS para o motorista" rows="5" maxlength="160" required></textarea>
+          </div>
+          <div class="panel-footer">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <button type="submit" class="btn btn-labeled btn-success">
+                        <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span> Enviar</a>
+                </div>
+            </div>
+          </div>
+          </fieldset>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <%if (request.addPontos == 'true') {%>
 <script type="text/javascript">
 document.onreadystatechange = function () {
@@ -280,7 +321,7 @@ document.onreadystatechange = function () {
 }
 </script>
 <%}%>
-  ${request.addCurti}
+
 <%if (request.addCurti == 'true') {%>
 <script type="text/javascript">
 document.onreadystatechange = function () {
@@ -300,6 +341,17 @@ document.onreadystatechange = function () {
 }
 </script>
 <%}%>
+$request.sms sms
+<%if (request.sms == 'true') {%>
+<script type="text/javascript">
+document.onreadystatechange = function () {
+  if (document.readyState === "complete") {
+    document.getElementById("smsBtn").click();
+  }
+}
+</script>
+<%}%>
+
 
 <script type="text/javascript">
 

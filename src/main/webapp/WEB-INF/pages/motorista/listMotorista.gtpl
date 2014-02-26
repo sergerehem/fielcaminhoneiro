@@ -20,23 +20,23 @@
 </div>
 
 <div class="row">
-    <div id="tableContatos" class="table-responsive">
-      <table class="table table-striped footable default" data-page-navigation=".pagination" data-page-size="15" data-filter="#search">
+    <div id="divTableMotoristas" class="table-responsive">
+      <table id="tableMotoristas" class="table table-striped footable default" data-page-navigation=".pagination" data-page-size="20" data-filter="#search">
         <thead>
            <tr>
               <th<%if (!request.filter){%>data-sort-initial="true"<%}%>>Nome</th>
-              <th data-sort-ignore="true">Celular</th>
+              <th>Celular</th>
               <th data-sort-ignore="true">Cartão</th>
               <th data-type="numeric">Pontos</th>
               <th data-type="numeric">Bônus</th>
-              <th data-sort-ignore="true">Grupo(s)</th>
+              <th>Grupo(s)</th>
               <th data-sort-ignore="true">&nbsp;</th>
            </tr>
         </thead>
         <tbody>
            <% request.motoristas.each { motorista -> %>
               <tr>
-                 <td><div class="draggable">${motorista.nome}</div></td>
+                 <td><div class="draggable"><a href="/motorista/view/${motorista.key.id}">${motorista.nome}</a></div></td>
                  <td>${motorista.celular}</td>
                  <td><img src="/img/${motorista.categoria}_mini.png" class="img-rounded" alt="${motorista.categoria}"/></td>
                  <td><span class="badge ${motorista.categoria}"><i class="fa fa-certificate"></i> ${motorista.pontos}</span></td>
@@ -48,6 +48,7 @@
                 <a class='btn btn-danger btn-xs' onclick="if (!confirm('Todos os dados deste motorista serão excluídos. Tem certeza que deseja EXCLUIR o motorista?')) return false;" href="/motorista/delete/${motorista.key.id}"><i class="fa fa-trash-o"></i> excluir</a>
                 &nbsp;|&nbsp;
                 <a class='btn btn-warning btn-xs' href="/motorista/view/${motorista.key.id}?addPontos=true"><i class="fa fa-certificate"></i> adicionar pontos</a>
+                <a class='btn btn-info btn-xs' href="/motorista/view/${motorista.key.id}?sms=true"><i class="fa fa-comments"></i> enviar SMS</a>
                 <a class='btn btn-primary btn-xs' href="/motorista/view/${motorista.key.id}?addCurti=true"><i class="fa fa-thumbs-o-up"></i> <%if (motorista.curti != null && motorista.curti != 0){%> ${motorista.curti}</span><%}%></a>
                 <a class='btn btn-danger btn-xs' href="/motorista/view/${motorista.key.id}?addNaoCurti=true"><i class="fa fa-thumbs-o-down"></i> <%if (motorista.naoCurti != null && motorista.naoCurti != 0){%> ${motorista.naoCurti}<%}%></a>
                 </td>
@@ -62,9 +63,8 @@
             </tr>
         </tfoot>
       </table>
+      <p>Total: ${request.motoristas.size()} Motoristas
     </div>
 </div>
 
 <% include '/WEB-INF/includes/footer.gtpl' %>
-
-

@@ -33,7 +33,7 @@
     </div>
   </div>
   <div class="col-lg-4">
-    <div class="panel panel-warning">
+    <div class="panel panel-danger">
       <div class="panel-heading">
         <div class="row">
           <div class="col-xs-6">
@@ -77,6 +77,36 @@
           <div class="row">
             <div class="col-xs-6">
               Ver Bônus Distribuídos
+            </div>
+            <div class="col-xs-6 text-right">
+              <i class="fa fa-arrow-circle-right"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div><!-- /.row -->
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-6">
+            <i class="fa fa-trophy fa-5x"></i>
+          </div>
+          <div class="col-xs-6 text-right">
+            <p class="announcement-heading">${request.total_ranking}</p>
+            <p class="announcement-text">Motoristas Rankeados</p>
+          </div>
+        </div>
+      </div>
+      <a href="/ranking">
+        <div class="panel-footer announcement-bottom">
+          <div class="row">
+            <div class="col-xs-6">
+              Listar Ranking
             </div>
             <div class="col-xs-6 text-right">
               <i class="fa fa-arrow-circle-right"></i>
