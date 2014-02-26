@@ -225,7 +225,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><span class="label label-primary"><i class="fa fa-thumbs-o-up"></i></span> Curti</h4>
+        <h3 class="modal-title"><span class="label label-primary"><i class="fa fa-thumbs-o-up"></i></span> Curti</h3>
       </div>
       <form action="/curti" method="post">
           <fieldset>
@@ -255,9 +255,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><span class="label label-danger"><i class="fa fa-thumbs-o-down"></i></span> Não Curti</h4>
+        <h3 class="modal-title"><span class="label label-danger"><i class="fa fa-thumbs-o-down"></i></span> Não Curti</h3>
       </div>
-      <form action="/naocurti" method="post">
+      <form action="/naocurti" method="post" class="form">
           <fieldset>
           <input type="hidden" name="id" value="${motorista.key.id}">
           <input type="hidden" name="view" value="${request.view}">
@@ -286,29 +286,28 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><span class="label label-info"><i class="fa fa-comments"></i></span> Enviar SMS para ${motorista.celular} </h4>
+        <h3 class="modal-title"><span class="label label-info label-lg"><i class="fa fa-comments"></i> SMS</span> Enviar para ${motorista.celular}</h3>
       </div>
-      <form action="/sms" method="post">
-          <fieldset>
-          <input type="hidden" name="id" value="${motorista.key.id}">
-          <input type="hidden" name="celular" value="${motorista.celular}">
-          <input type="hidden" name="view" value="${request.view}">
-          <div class="form-group">
-            <textarea name="texto" class="form-control" placeholder="coloque aqui a sua mensagem SMS para o motorista" rows="5" maxlength="160" required></textarea>
-          </div>
-          <div class="panel-footer">
-            <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                    <button type="submit" class="btn btn-labeled btn-success">
-                        <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span> Enviar</a>
-                </div>
+      <form action="/sms" method="post" role="form">
+        <fieldset>
+         <div class="modal-body">
+              <input type="hidden" name="id" value="${motorista.key.id}">
+              <input type="hidden" name="celular" value="${motorista.celular}">
+              <input type="hidden" name="view" value="${request.view}">
+              <div class="form-group">
+                <textarea name="texto" class="form-control" placeholder="coloque aqui a sua mensagem SMS para o motorista" rows="5" maxlength="110" required></textarea>
+                <input class="form-control" id="assinatura" name="assinatura" value="Anisio, 71 9381-3344 (tim), Normando Transportes."></input>
+              </div>
+         </div>
+         <div class="modal-footer">
+            <div class="btn-group">
+                <button type="submit" class="btn btn-labeled btn-success">
+                    <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span> Enviar</a>
             </div>
-          </div>
-          </fieldset>
+     </div>
+         </fieldset>
       </form>
-    </div><!-- /.modal-content -->
+        </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 

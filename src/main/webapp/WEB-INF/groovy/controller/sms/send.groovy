@@ -7,7 +7,7 @@ if (user == null) {
 
     def t = new Twilio()
     def cel = "+55" + params.celular.replaceAll('\\(','').replaceAll("\\)","").replaceAll("-","")
-    def msg = params.texto ?: "sms test message"
+    def msg = params.texto + " " + params.assinatura
 //    def callback =  params.callback ?: "http://www.fielcaminhoneiro.com.br/twilio_callback"
     def msgId = t.sendSMS(cel, msg)
 
