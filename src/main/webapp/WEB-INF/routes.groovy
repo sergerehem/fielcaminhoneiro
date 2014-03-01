@@ -25,6 +25,8 @@ get "/motorista/delete/@id",    forward: "/controller/motorista/deleteMotorista.
 post"/motorista/update",        forward: "/controller/motorista/updateMotorista.groovy"
 get "/motorista/search",    	  forward: "/controller/motorista/searchMotorista.groovy"
 
+post "/motorista/sms",    	  forward: "/controller/motorista/smsMotorista.groovy"
+
 // GROUPS
 get "/grupos", 									forward: "/controller/grupo/listGroup.groovy"
 get  "/grupo/list",           	forward: "/controller/grupo/listGroup.groovy"

@@ -56,16 +56,18 @@
             </select>
           </div>
         </div>
-        <%if (request.view != 'true') {%>
+
         <div class="form-actions">
             <div class="col-lg-offset-2 col-lg-10">
               <p>
-                <a href="/motoristas">Cancelar</a>
+                <a href="/motoristas"><i class="fa fa-arrow-left"></i> Voltar</a>&nbsp;
+                <%if (request.view != 'true') {%>
                 <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-check"></i> ${action}</button>
+                <%}%>
               </p>
             </div>
         </div>
-        <%}%>
+
         <% if(existingKey) { %>
            <input type="hidden" name="id" value="${motorista.key.id}">
         <% } %>
@@ -140,6 +142,7 @@
             <option>BONUS</option>
             <option>CURTI</option>
             <option>NÃO CURTI</option>
+            <option>SMS</option>
           </select>
       </h4>
     </div>
@@ -147,7 +150,7 @@
       <div class="table-responsive">
         <table id="tableHistorico" class="table table-striped footable default" data-page-navigation=".pagination" data-page-size="10">
             <thead>
-                <th>Data/hora</th>
+                <th data-sort-initial="true">Data/hora</th>
                 <th>Usuário</th>
                 <th>Tipo</th>
                 <th>Descrição</th>
@@ -229,22 +232,21 @@
       </div>
       <form action="/curti" method="post">
           <fieldset>
-          <input type="hidden" name="id" value="${motorista.key.id}">
-          <input type="hidden" name="view" value="${request.view}">
-          <div class="form-group">
-            <textarea name="texto" class="form-control" placeholder="O que você curtiu com relação a esse Motorista?" rows="5" required></textarea>
-          </div>
-          <div class="panel-footer">
-            <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                    <button type="submit" class="btn btn-labeled btn-success">
-                        <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span> Confirmar</a>
-                </div>
+           <div class="modal-body">
+                <input type="hidden" name="id" value="${motorista.key.id}">
+              <input type="hidden" name="view" value="${request.view}">
+              <div class="form-group">
+                <textarea name="texto" class="form-control" placeholder="O que você curtiu com relação ao motorista $motorista.nome?" rows="5" required></textarea>
+              </div>
+             </div>
+         <div class="modal-footer">
+            <div class="btn-group">
+                <button type="submit" class="btn btn-lg btn-success">
+                    <i class="fa fa-check"></i></span> Confirmar
+                </button>
             </div>
-          </div>
-          </fieldset>
+        </div>
+       </fieldset>
       </form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -259,19 +261,18 @@
       </div>
       <form action="/naocurti" method="post" class="form">
           <fieldset>
-          <input type="hidden" name="id" value="${motorista.key.id}">
-          <input type="hidden" name="view" value="${request.view}">
-          <div class="form-group">
-            <textarea name="texto" class="form-control" placeholder="O que você não curtiu com relação a esse Motorista?" rows="5" required></textarea>
+              <div class="modal-body">
+              <input type="hidden" name="id" value="${motorista.key.id}">
+              <input type="hidden" name="view" value="${request.view}">
+              <div class="form-group">
+                <textarea name="texto" class="form-control" placeholder="O que você não curtiu com relação a ao motorista $motorista.nome?" rows="5" required></textarea>
+              </div>
           </div>
-          <div class="panel-footer">
-            <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                    <button type="submit" class="btn btn-labeled btn-success">
-                        <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span> Confirmar</a>
-                </div>
+          <div class="modal-footer">
+            <div class="btn-group">
+                <button type="submit" class="btn btn-lg btn-success">
+                    <i class="fa fa-check"></i></span> Confirmar
+                </button>
             </div>
           </div>
           </fieldset>
@@ -279,7 +280,6 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<%}%>
 
 <div class="modal fade" id="formSMS" tabindex="-1" role="dialog" aria-labelledby="formSMSLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -295,21 +295,28 @@
               <input type="hidden" name="celular" value="${motorista.celular}">
               <input type="hidden" name="view" value="${request.view}">
               <div class="form-group">
-                <textarea name="texto" class="form-control" placeholder="coloque aqui a sua mensagem SMS para o motorista" rows="5" maxlength="110" required></textarea>
+                <textarea name="texto" class="form-control" placeholder="coloque aqui a sua mensagem SMS para o motorista $motorista.nome" rows="5" maxlength="110" required></textarea>
                 <input class="form-control" id="assinatura" name="assinatura" value="Anisio, 71 9381-3344 (tim), Normando Transportes."></input>
               </div>
          </div>
          <div class="modal-footer">
+            <!--<div class="btn-group">
+                <button type="button" class="btn btn-primary pull-left">
+                    <i class="fa fa-copy"></i> Copiar Texto
+                </button>&nbsp;
+            </div>-->
             <div class="btn-group">
-                <button type="submit" class="btn btn-labeled btn-success">
-                    <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span> Enviar</a>
+                <button type="submit" class="btn btn-lg btn-success">
+                    <i class="fa fa-check"></i> Enviar
+                </button>
             </div>
-     </div>
+        </div>
          </fieldset>
       </form>
         </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<%}%>
 
 <%if (request.addPontos == 'true') {%>
 <script type="text/javascript">
@@ -340,7 +347,7 @@ document.onreadystatechange = function () {
 }
 </script>
 <%}%>
-$request.sms sms
+
 <%if (request.sms == 'true') {%>
 <script type="text/javascript">
 document.onreadystatechange = function () {

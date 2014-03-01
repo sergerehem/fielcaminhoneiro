@@ -2,7 +2,7 @@
 
   <div class="row">
     <h1 class="page-header">Grupos <small>listar</small></h1>
-    <a class="btn btn-primary pull-right" href="/grupo/add">Incluir Grupo</a>
+    <a class="btn btn-primary pull-right" href="/grupo/add"><i class="fa fa-plus"></i> Incluir Grupo</a>
     <br><br>
     <div class="table-responsive">
       <table class="table table-striped footable">

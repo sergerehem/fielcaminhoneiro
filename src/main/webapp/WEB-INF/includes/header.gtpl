@@ -30,6 +30,8 @@
 
 <!--    <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script> -->
 
+    <link rel="stylesheet" href="/css/ladda-themeless.min.css">
+
     <script src="/js/jquery-1.10.2.js"></script>
   </head>
 

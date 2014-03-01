@@ -5,11 +5,10 @@ if (user == null) {
     redirect "/"
 } else {
 
-    def t = new Twilio()
-    def cel = "+55" + params.celular.replaceAll('\\(','').replaceAll("\\)","").replaceAll("-","")
+    def sms = new SMS()
     def msg = params.texto + " " + params.assinatura
-//    def callback =  params.callback ?: "http://www.fielcaminhoneiro.com.br/twilio_callback"
-    def msgId = t.sendSMS(cel, msg)
+
+    def msgId = sms.sendSMS(params.celular, msg)
 
 //    println "Sent '${msg}' to $to. MsgId: $msgId. Callback: $callback"
 

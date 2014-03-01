@@ -26,6 +26,8 @@ if (user == null) {
   request.groups = groups
   
   request.group = params.group
-  
+
+  request.flush = params.flush
+
   forward '/WEB-INF/pages/motorista/listMotorista.gtpl'
 }

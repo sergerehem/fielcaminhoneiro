@@ -48,7 +48,8 @@ dependencies {
     compile "com.google.appengine:appengine-api-1.0-sdk:$gaeVersion",
             "com.google.appengine:appengine-api-labs:$gaeVersion"
     compile 'org.gaelyk:gaelyk:2.0'
-    
+
+    compile "com.ocpsoft:ocpsoft-pretty-time:1.0.7"
     compile "com.twilio.sdk:twilio-java-sdk:3.4.2"
 
     /**

@@ -39,6 +39,9 @@
       });
     </script> 
 
+	<script src="/js/spin.min.js"></script>
+    <script src="/js/ladda.min.js"></script>
+
 		<!-- Graph
     <script src="/js/raphael-min.js"></script>
     <script src="/js/morris/morris-0.4.3.min.js"></script>

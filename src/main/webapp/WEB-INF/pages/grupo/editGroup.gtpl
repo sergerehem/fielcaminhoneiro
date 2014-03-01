@@ -25,10 +25,10 @@
         </div>
         <div class="form-actions">
           <div class="col-lg-offset-2 col-lg-10">
+            <!-- Indicates a dangerous or potentially negative action -->
+            <a href="/grupos"><i class="fa fa-arrow-left"></i> Voltar</a>&nbsp;
             <!-- Indicates caution should be taken with this action -->
             <button type="submit" class="btn btn-primary btn-lg">${action}</button>
-            <!-- Indicates a dangerous or potentially negative action -->
-            <button type="button" class="btn btn-danger" onclick="javascript:document.location.href = '/grupos';">Cancelar</button>
           </div>
         </div>
         <% if(existingKey) { %>
