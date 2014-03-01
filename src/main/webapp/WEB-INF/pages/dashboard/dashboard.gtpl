@@ -49,7 +49,7 @@
         <div class="panel-footer announcement-bottom">
           <div class="row">
             <div class="col-xs-6">
-              Listar
+              Ver $request.total_dist_pontos Distribuição de Pontos
             </div>
             <div class="col-xs-6 text-right">
               <i class="fa fa-arrow-circle-right"></i>
@@ -68,7 +68,7 @@
           </div>
           <div class="col-xs-6 text-right">
             <p class="announcement-heading">${request.dashboard.total_bonus}</p>
-            <p class="announcement-text">Bônus Distribuidos</p>
+            <p class="announcement-text">R\$ em Bônus Distribuidos</p>
           </div>
         </div>
       </div>
@@ -76,7 +76,7 @@
         <div class="panel-footer announcement-bottom">
           <div class="row">
             <div class="col-xs-6">
-              Ver Bônus Distribuídos
+              Ver $request.total_bonus Bônus Distribuídos
             </div>
             <div class="col-xs-6 text-right">
               <i class="fa fa-arrow-circle-right"></i>
@@ -107,6 +107,34 @@
           <div class="row">
             <div class="col-xs-6">
               Listar Ranking
+            </div>
+            <div class="col-xs-6 text-right">
+              <i class="fa fa-arrow-circle-right"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-6">
+            <i class="fa fa-comments fa-5x"></i>
+          </div>
+          <div class="col-xs-6 text-right">
+            <p class="announcement-heading">${request.total_sms}</p>
+            <p class="announcement-text">SMS Enviados</p>
+          </div>
+        </div>
+      </div>
+      <a href="/ranking">
+        <div class="panel-footer announcement-bottom">
+          <div class="row">
+            <div class="col-xs-6">
+              Listar SMS
             </div>
             <div class="col-xs-6 text-right">
               <i class="fa fa-arrow-circle-right"></i>

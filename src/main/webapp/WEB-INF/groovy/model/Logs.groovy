@@ -24,6 +24,15 @@ public class Logs {
         }
     }
 
+
+    def count(tipoLog) {
+        datastore.execute {
+            select count
+            from log
+            where tipo == tipoLog
+        }
+    }
+
     def delete(id) {
         datastore.withTransaction {
             Key key = KeyFactory.createKey("motorista", Long.parseLong(id))

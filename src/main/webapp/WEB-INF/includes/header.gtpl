@@ -35,6 +35,22 @@
     <script src="/js/jquery-1.10.2.js"></script>
   </head>
 
+<%
+def camelCase(username) {
+    def (name, domain) = username.tokenize('@')
+    name = name.replaceAll("-","_")
+    name = name.replaceAll("\\.","_")
+    name = name.replaceAll(/_\w/){ " " + it[1].toUpperCase() }
+    name.capitalize()
+}
+
+String underscoreToCamelCase(String underscore){
+if(!underscore || underscore.isAllWhitespace()){
+return ''
+}
+return underscore.replaceAll(/_\w/){ it[1].toUpperCase() }
+}
+%>
   <body>
 
     <div class="container-full" id="wrapper">
@@ -57,9 +73,9 @@
 						<li><a href="/motoristas"><i class="fa fa-user"></i> Motoristas</a></li>
 						<li><a href="/grupos"><i class="fa fa-users"></i> Grupos</a></li>
 						<li><a href="/pontos"><i class="fa fa-certificate"></i> Pontos</a></li>
-						<li><a href="/dashboard"><i class="fa fa-dashboard"></i> Painel de Controle</a></li>
+						<li><a href="/dashboard"><i class="fa fa-dashboard"></i> Painel</a></li>
 		        <li class="dropdown user-dropdown">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${user?.nickname}<b class="caret"></b></a>
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${camelCase(user?.nickname)}<b class="caret"></b></a>
 		          <ul class="dropdown-menu">
 		            <li><a href="${users.createLogoutURL('/')}"><i class="fa fa-sign-out"></i> Logout</a></li>
 		          </ul>
