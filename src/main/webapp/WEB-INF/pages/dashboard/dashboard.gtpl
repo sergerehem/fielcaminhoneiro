@@ -22,7 +22,7 @@
         <div class="panel-footer announcement-bottom">
           <div class="row">
             <div class="col-xs-6">
-              Listar Motoristas
+              Ver Motoristas
             </div>
             <div class="col-xs-6 text-right">
               <i class="fa fa-arrow-circle-right"></i>
@@ -45,7 +45,7 @@
           </div>
         </div>
       </div>
-      <a href="/motoristas?pontos=true">
+      <a href="/log?title=${request.total_dist_pontos} distribuições totalizando ${request.dashboard.total_pontos} pontos&tipo=PONTOS">
         <div class="panel-footer announcement-bottom">
           <div class="row">
             <div class="col-xs-6">
@@ -72,7 +72,7 @@
           </div>
         </div>
       </div>
-      <a href="/motoristas?bonus=true">
+      <a href="/log?title=$request.total distribuições totalizando R\$${request.dashboard.total_bonus} em Bônus&tipo=BONUS">
         <div class="panel-footer announcement-bottom">
           <div class="row">
             <div class="col-xs-6">
@@ -106,7 +106,7 @@
         <div class="panel-footer announcement-bottom">
           <div class="row">
             <div class="col-xs-6">
-              Listar Ranking
+              Ver Ranking
             </div>
             <div class="col-xs-6 text-right">
               <i class="fa fa-arrow-circle-right"></i>
@@ -126,15 +126,15 @@
           </div>
           <div class="col-xs-6 text-right">
             <p class="announcement-heading">${request.total_sms}</p>
-            <p class="announcement-text">SMS Enviados</p>
+            <p class="announcement-text">Ver SMS Enviados</p>
           </div>
         </div>
       </div>
-      <a href="/ranking">
+      <a href="/log?title=${request.total_sms} SMS Enviados&tipo=SMS">
         <div class="panel-footer announcement-bottom">
           <div class="row">
             <div class="col-xs-6">
-              Listar SMS
+              Ver SMS
             </div>
             <div class="col-xs-6 text-right">
               <i class="fa fa-arrow-circle-right"></i>

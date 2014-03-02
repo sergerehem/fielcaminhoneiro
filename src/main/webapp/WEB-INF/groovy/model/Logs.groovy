@@ -24,6 +24,22 @@ public class Logs {
         }
     }
 
+    def listAll() {
+        datastore.execute {
+            select all
+            from log
+            sort desc by dateCreated
+        }
+    }
+
+    def listByTipo(tipoLog) {
+        datastore.execute {
+            select all
+            from log
+            where tipo == tipoLog
+            sort desc by dateCreated
+        }
+    }
 
     def count(tipoLog) {
         datastore.execute {

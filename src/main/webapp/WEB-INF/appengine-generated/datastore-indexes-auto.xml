@@ -1,10 +1,16 @@
-<!-- Indices written at Sat, 1 Mar 2014 18:11:33 BRT -->
+<!-- Indices written at Sun, 2 Mar 2014 11:44:24 BRT -->
 
 <datastore-indexes>
 
-    <!-- Used 2 times in query history -->
+    <!-- Used 5 times in query history -->
     <datastore-index kind="log" ancestor="false" source="auto">
         <property name="idMotorista" direction="asc"/>
+        <property name="dateCreated" direction="desc"/>
+    </datastore-index>
+
+    <!-- Used 15 times in query history -->
+    <datastore-index kind="log" ancestor="false" source="auto">
+        <property name="tipo" direction="asc"/>
         <property name="dateCreated" direction="desc"/>
     </datastore-index>
 

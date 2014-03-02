@@ -45,3 +45,5 @@ post "/curti",           forward: "/controller/feedback/addCurti.groovy"
 post "/naocurti",        forward: "/controller/feedback/addNaoCurti.groovy"
 post "/sms",        forward: "/controller/sms/send.groovy"
 
+// LOG
+get "/log", 				   forward: "/controller/log/listLog.groovy"
