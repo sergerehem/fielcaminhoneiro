@@ -5,7 +5,7 @@
     <div class="table-responsive">
         <table id="tableHistorico" class="table table-striped footable default" data-page-navigation=".pagination" data-page-size="100">
             <thead>
-                <th data-sort-initial="true">Data/hora</th>
+                <th data-sort-initial="descending">Data/hora</th>
                 <th>Usuário</th>
                 <th>Tipo</th>
                 <th>Descrição</th>

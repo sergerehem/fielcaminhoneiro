@@ -33,6 +33,14 @@ public class Motoristas {
         }
     }
 
+    def countRanking() {
+        datastore.execute {
+            select count
+            from motorista
+            where pontos > 0
+        }
+    }
+    
     def listBySearch(search) {
         search.search {
             select all

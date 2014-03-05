@@ -72,11 +72,11 @@
           </div>
         </div>
       </div>
-      <a href="/log?title=$request.total distribuições totalizando R\$${request.dashboard.total_bonus} em Bônus&tipo=BONUS">
+      <a href="/log?title=$request.total_bonus distribuições totalizando R\$${request.dashboard.total_bonus} em Bônus&tipo=BONUS">
         <div class="panel-footer announcement-bottom">
           <div class="row">
             <div class="col-xs-6">
-              Ver $request.total_bonus Bônus Distribuídos
+              Ver $request.total_bonus Distribuições de Bônus 
             </div>
             <div class="col-xs-6 text-right">
               <i class="fa fa-arrow-circle-right"></i>

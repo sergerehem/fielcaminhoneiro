@@ -47,3 +47,7 @@ post "/sms",        forward: "/controller/sms/send.groovy"
 
 // LOG
 get "/log", 				   forward: "/controller/log/listLog.groovy"
+
+// SMS
+
+get "/ranking/sms", 				   forward: "/controller/sms/rankingSMS.groovy"

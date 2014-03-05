@@ -114,7 +114,7 @@
               <p>Faltam <strong>$dif</strong> pontos para mudar de categoria...</p>
             <!-- Button trigger modal -->
             <button id="adicionarPontosBtn" class="btn <%if (categoria == "prata"){%>btn-primary<%}else{%>btn-warning<%}%>" data-toggle="modal" data-target="#formAdicionarPontos">
-              Adicionar Pontos
+              <i class="fa fa-plus-circle"></i> Pontos
             </button>
             <a href="#historico" class="btn">
               Ver Histórico
