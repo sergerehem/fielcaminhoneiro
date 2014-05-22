@@ -500,7 +500,7 @@ function submitPontos() {
       //alert(regiao+"->"+pontos + "->" + optEstados + "->" + optEntregas);
       document.formPontos.submit();
   } else
-    alert('Selecione sua porra');
+    alert('Preencha todas as informações!');
 }
 
 function limpar() {
