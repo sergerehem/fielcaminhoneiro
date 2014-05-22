@@ -39,6 +39,7 @@ post "/grupo/update",         	forward: "/controller/grupo/updateGroup.groovy"
 // PONTOS
 get "/pontos", 				   forward: "/controller/pontos/listPontos.groovy"
 get "/pontos/add/@id/@pontos", forward: "/controller/pontos/addPontos.groovy?id=@id&pontos=@pontos"
+post "/pontos/add", forward: "/controller/pontos/addPontos.groovy"
 
 // FEEDBACK
 post "/curti",           forward: "/controller/feedback/addCurti.groovy"

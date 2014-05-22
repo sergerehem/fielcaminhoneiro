@@ -1,3 +1,4 @@
+
 <% include '/WEB-INF/includes/header.gtpl' %>
  
 <%
@@ -150,7 +151,7 @@
       <div class="table-responsive">
         <table id="tableHistorico" class="table table-striped footable default" data-page-navigation=".pagination" data-page-size="10">
             <thead>
-                <th data-sort-initial="true">Data/hora</th>
+                <th data-sort-initial="descending">Data/hora</th>
                 <th>Usuário</th>
                 <th>Tipo</th>
                 <th>Descrição</th>
@@ -203,23 +204,97 @@
 <% if (motorista != null) { %>
 <div class="modal fade" id="formAdicionarPontos" tabindex="-1" role="dialog" aria-labelledby="formAdicionarPontosLabel" aria-hidden="true">
   <div class="modal-dialog">
+    <form method="post" action="/pontos/add" id="formPontos" name="formPontos">
+    <fieldset>  
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title">Adicionar Pontos</h4>
       </div>
       <div class="modal-body">
-      <%
-       id = motorista.key.id
-       request.pontos.each { ponto ->
-            pontos = ponto.value
-            regiao = ponto.key
-            msg = "Confirma a inclusão de $pontos pontos ($regiao)?"
-       %>
-            <h4><a href="/pontos/add/$id/$pontos?regiao=$regiao&view=${request.view}" onclick="if (!confirm('$msg')) return false;"><span class="badge">$pontos</span> $regiao</a></h4>
-       <% } %>
-      </div>
-    </div><!-- /.modal-content -->
+        <div class="row">
+          <div class="col-md-9">
+            <div class="btn-group">
+             <label>Qual a região de destino?</label>
+            <%
+             id = motorista.key.id
+             %>
+             <input type="hidden" name="id" value="$id"/>
+             <input type="hidden" name="regiao"/>
+             <!--<input type="hidden" name="pontosEstados"/>
+             <input type="hidden" name="pontosEntregas"/>-->
+             <%
+             request.pontos.each { ponto ->
+                  pontos = ponto.value
+                  regiao = ponto.key
+                  msg = "Confirma a inclusão de $pontos pontos ($regiao)?"
+             %>
+                  <!--<h4><a href="/pontos/add/$id/$pontos?regiao=$regiao&view=${request.view}" onclick="if (!confirm('$msg')) return false;"><span class="badge">$pontos</span> $regiao</a></h4>-->
+              <div class="radio">
+                  <label>
+                      <input type="radio" name="optRegiao" value="$regiao|$pontos"><span class="badge">$pontos</span> $regiao<br/>
+                  </label>
+              </div>            
+             <% } %>
+             </div>
+           </div>
+           <div class="col-md-3">
+             <span class="label prata label-lg" style="font-size: 18pt;"><i class="fa fa-plus-circle"></i> <span id="pontosAdd">0</span></span>
+           </div>
+         </div>
+         <div class="row">
+             <div class="col-md-6">
+                <div class="btn-group">
+                   <label>Quantos Estados?</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optEstados" value="0"><span class="badge">+0</span> 1
+                        </label>
+                    </div>            
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optEstados" value="500"><span class="badge">+500</span> 2
+                        </label>
+                    </div>            
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optEstados" value="1000"><span class="badge">+1000</span> 3 ou mais
+                        </label>
+                    </div>            
+                </div>
+            </div>
+            <div class="col-md-6">
+              <div class="btn-group">
+                 <label>Quantas Entregas?</label>
+                  <div class="radio">
+                      <label>
+                          <input type="radio" name="optEntregas" value="0"><span class="badge">+0</span> Até 4
+                      </label>
+                  </div>            
+                  <div class="radio">
+                      <label>
+                          <input type="radio" name="optEntregas" value="500"><span class="badge">+500</span> 5 ou 6
+                      </label>
+                  </div>            
+                  <div class="radio">
+                      <label>
+                          <input type="radio" name="optEntregas" value="1000"><span class="badge">+1000</span> 7 ou mais
+                      </label>
+                  </div>            
+              </div>      
+          </div>
+      </div>        
+    </div>
+    <!-- /.modal-content -->
+     <div class="modal-footer">
+        <div class="btn-group">
+            <button type="button" class="btn btn-lg btn-success" onclick="submitPontos();">
+                <i class="fa fa-check"></i></span> Confirmar
+            </button>
+        </div>
+    </div>     
+    </fieldset>
+    </form>
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
@@ -378,6 +453,32 @@ document.onreadystatechange = function () {
         filtrar(filtro);
 });
 
+//(jQuery)('#optRegiao').change(function() {       
+(jQuery)("input[type='radio']").change(function () {
+  console.log('Mudou para'+(jQuery)(this).val());
+  //(jQuery)('#pontosAdd').text(somaPontosAdicionais());
+  somaPontosAdicionais();
+  //alert((jQuery)(this).val());
+});
+
+function somaPontosAdicionais() {
+  var optRegiao = (jQuery)('input[name=optRegiao]:checked', '#formPontos').val()
+  var optEstados = (jQuery)('input[name=optEstados]:checked', '#formPontos').val()  
+  var optEntregas = (jQuery)('input[name=optEntregas]:checked', '#formPontos').val() 
+  if (optRegiao || optEstados || optEntregas) {
+    console.log('deu');
+    var pontosRegiao = optRegiao ? optRegiao.split('|')[1] : 0;
+    var somaPontos = parseInt(pontosRegiao) + (optEstados ? parseInt(optEstados) : 0) + (optEntregas ? parseInt(optEntregas) : 0);
+    console.log(somaPontos);
+    (jQuery)('#pontosAdd').text(somaPontos);
+    (jQuery)('#pontosAdd').show();    
+  } else {
+   console.log('creca');
+    (jQuery)('#pontosAdd').text('0');
+    (jQuery)('#pontosAdd').hide();
+  }  
+}
+
 function filtrar(filtro) {
     (jQuery)('#tableHistorico').trigger('footable_filter', {filter: filtro});
     /*
@@ -387,6 +488,20 @@ function filtrar(filtro) {
     */
 }
 
+function submitPontos() {
+//  var regiao = (jQuery)('#optRegiao').value();
+  var optRegiao = (jQuery)('input[name=optRegiao]:checked', '#formPontos').val()
+  var optEstados = (jQuery)('input[name=optEstados]:checked', '#formPontos').val()
+  var optEntregas = (jQuery)('input[name=optEntregas]:checked', '#formPontos').val()      
+  if (optRegiao && optEstados && optEntregas) {
+      var regiaoPontos = optRegiao.split("|");
+      var regiao = regiaoPontos[0];
+      var pontos = regiaoPontos[1];
+      //alert(regiao+"->"+pontos + "->" + optEstados + "->" + optEntregas);
+      document.formPontos.submit();
+  } else
+    alert('Selecione sua porra');
+}
 
 function limpar() {
     (jQuery)('#tableHistorico').trigger('footable_clear_filter');

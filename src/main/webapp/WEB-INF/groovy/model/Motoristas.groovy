@@ -141,14 +141,17 @@ public class Motoristas {
         }
     }
 
-    def addPontos(id, pontos, regiao) {
+    def addPontos(id, pontos, regiao, pontosEstados, pontosEntregas) {
         def e = get(id)
 
+        def pontosRegiao = pontos
+        pontos += pontosEstados + pontosEntregas
+        
         def pagarBonus = null
         int bonus = 100
         def novaCategoria = "bronze"
         int novaPontuacao = (int)e.pontos + pontos
-
+        
         if (novaPontuacao >= 50000 && novaPontuacao< 150000) {
             novaCategoria = "prata"
             bonus = 150
@@ -158,8 +161,16 @@ public class Motoristas {
         }
 
         datastore.withTransaction(true) {
-
             def operacao = "Adicionou $pontos pontos ($regiao); "
+            if (pontosEstados > 0 || pontosEntregas > 0) {
+              operacao = "Adicionou $pontos pontos, sendo $pontosRegiao de $regiao; "
+              if (pontosEstados > 0) {
+                operacao += "+$pontosEstados pela entrega em 2 ou mais Estados;"
+              }
+              if (pontosEntregas > 0) {
+                operacao += "+$pontosEntregas por ter 5 ou mais Entregas;"
+              }
+            }
             new Logs().add(id, e.nome, "PONTOS", operacao)
             new Dashboard().add("total_pontos", pontos)
 
