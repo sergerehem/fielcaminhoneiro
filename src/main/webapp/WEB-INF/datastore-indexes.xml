@@ -4,4 +4,10 @@
         <property name="nome" direction="asc" />
         <property name="celular" direction="asc" />
     </datastore-index>
+    <datastore-index kind="log" ancestor="false" source="manual">
+        <property name="tipo" direction="asc"/>
+        <property name="dateCreated" direction="desc"/>
+    </datastore-index>    
 </datastore-indexes>
+
+
