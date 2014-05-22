@@ -6,7 +6,7 @@ if (user == null) {
 } else {
 
     def sms = new SMS()
-    def msg = params.texto + " " + params.assinatura
+    def msg = params.texto + (param.text.endsWidth('.') ? " " : ". ") + params.assinatura
 
     def msgId = sms.sendSMS(params.celular, msg)
 

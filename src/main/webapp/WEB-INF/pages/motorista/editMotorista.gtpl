@@ -363,7 +363,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3 class="modal-title"><span class="label label-info label-lg"><i class="fa fa-comments"></i> SMS</span> Enviar para ${motorista.celular}</h3>
       </div>
-      <form action="/sms" method="post" role="form">
+      <form action="/sms/send" method="post" role="form">
         <fieldset>
          <div class="modal-body">
               <input type="hidden" name="id" value="${motorista.key.id}">
@@ -371,7 +371,7 @@
               <input type="hidden" name="view" value="${request.view}">
               <div class="form-group">
                 <textarea name="texto" class="form-control" placeholder="coloque aqui a sua mensagem SMS para o motorista $motorista.nome" rows="5" maxlength="110" required></textarea>
-                <input class="form-control" id="assinatura" name="assinatura" value="Anisio, 71 9381-3344 (tim), Normando Transportes."></input>
+                <input class="form-control" id="assinatura" name="assinatura" value="Jackson, 71 9189-8470. Normando Transportes."></input>
               </div>
          </div>
          <div class="modal-footer">

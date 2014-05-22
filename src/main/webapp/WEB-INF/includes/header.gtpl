@@ -71,6 +71,7 @@ return underscore.replaceAll(/_\w/){ it[1].toUpperCase() }
 						<%if (user != null) {%>
 						<li><a href="/ranking"><i class="fa fa-trophy"></i> Ranking</a></li>
 						<li><a href="/motoristas"><i class="fa fa-user"></i> Motoristas</a></li>
+						<li><a href="/sms"><i class="fa fa-comments"></i> SMS</a></li>						
 						<li><a href="/grupos"><i class="fa fa-users"></i> Grupos</a></li>
 						<li><a href="/pontos"><i class="fa fa-certificate"></i> Pontos</a></li>
 						<li><a href="/dashboard"><i class="fa fa-dashboard"></i> Painel</a></li>

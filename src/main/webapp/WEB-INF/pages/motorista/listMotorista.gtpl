@@ -3,7 +3,7 @@
   <h1 class="page-header">Motorista <small><%=request.filter%></small></h1>
 </div>
 
-<form id="formMotoristas" action="/motorista/sms" method="post">
+<form id="formMotoristas" action="/motorista/sms/send" method="post">
 
 <%if (params.flush != null) { %>
 <div class="alert alert-info alert-dismissable">
@@ -91,7 +91,7 @@
          <div class="modal-body">
               <div class="form-group">
                 <textarea name="texto" class="form-control" placeholder="coloque aqui a sua mensagem SMS para os motoristas selecionados" rows="5" maxlength="110" required></textarea>
-                <input class="form-control" id="assinatura" name="assinatura" value="Anisio, 71 9381-3344 (tim), Normando Transportes."></input>
+                <input class="form-control" id="assinatura" name="assinatura" value="Jackson, 71 9189-8470. Normando Transportes."></input>
               </div>
          </div>
          <div class="modal-footer">

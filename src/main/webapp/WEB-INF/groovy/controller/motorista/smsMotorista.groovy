@@ -11,9 +11,9 @@ if (user == null) {
             (m, id, cel) = p.tokenize("_")
 
             def sms = new SMS()
-            def msg = params.texto + " " + params.assinatura
+            def msg = params.texto + ((params.texto).endsWith('.') ? " " : ". ") + params.assinatura
 
-            def msgId = 1 //sms.sendSMS(cel, msg)
+            def msgId = sms.sendSMS(cel, msg)
             def ret = new Motoristas().addSMS(id, msg)
 
             total++
