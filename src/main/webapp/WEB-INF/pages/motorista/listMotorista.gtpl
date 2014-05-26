@@ -3,6 +3,10 @@
   <h1 class="page-header">Motorista <small><%=request.filter%></small></h1>
 </div>
 
+<!--
+TODO: FILTER POR GRUPO, MULTI-SELECT
+-->
+
 <form id="formMotoristas" action="/motorista/sms/send" method="post">
 
 <%if (params.flush != null) { %>

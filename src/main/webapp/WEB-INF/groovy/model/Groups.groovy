@@ -22,7 +22,7 @@ public class Groups {
             sort asc by name
         }
     }
-
+    
     def delete(id) {
         Key key = KeyFactory.createKey("group", Long.parseLong(id))
         key.delete()
