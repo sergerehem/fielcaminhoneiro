@@ -12,15 +12,20 @@ if (user == null) {
   def motoristas = new Motoristas().listRanking()
 
   motoristas.eachWithIndex { m, i ->
-  
+  if (i==0){
     def cartao =  new Cartao(m.pontos)
       
-//    println "${i+1} $m.nome $m.categoria $m.pontos ${cartao.faltaQuantoParaGanharBonus()} ${cartao.valorProximoBonus()} ${cartao.categoriaProximoBonus()} ${Date.pretty(m.dateCreated)}<br>" 
+    def msg = 'Vc tem '+ m.pontos + ' pontos no Clube Fiel Caminhoneiro (Ultima viagem: ' + m.dateCreated[0..9] + 
+    '). Faltam '+ cartao.faltaQuantoParaGanharBonus() + ' p/R.' + cartao.valorProximoBonus() + 
+    ' de BONUS. Apareca! Jackson, 71 9189-8470. Normando Transportes.' //${Date.pretty(m.dateCreated)}
     
-    def msg = "Você é o ${i+1}o no ranking do Clube Fiel Caminhoneiro, com $m.pontos pontos. Falta ${cartao.faltaQuantoParaGanharBonus()} para ganhar um bônus de R\$${cartao.valorProximoBonus()}. Sua última viagem foi ${Date.pretty(m.dateCreated)}."
-    
-    println msg.size() +">$msg<hr>"
-  }
-  //forward '/WEB-INF/pages/motorista/rankingMotorista.gtpl'
-  
+    if (params.send == 'true') {
+      new SMS().sendSMS(m.celular, msg)
+      new Motoristas().addSMS(m.key.id as String, msg)
+      msg+="... SMS ENVIADO PARA $m.celular!<br>"
+    } else {
+      msg+="<br>"
+    }
+    println msg
+  }}
 }
