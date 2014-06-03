@@ -104,28 +104,31 @@ public class Motoristas {
         }
     }
 
-    def update(id, nome, celular, groups) {
+    def update(id, nome, celular, dataNascimento, groups) {
         datastore.withTransaction(true) {
             def e = get(id)
 
             def operacao = "Atualizou "
             if (nome != e.nome) operacao += "NOME de '$e.nome' para '$nome;' "
             if (celular != e.celular) operacao += "CELULAR de $e.celular para $celular; "
+            if (celular != e.celular) operacao += "DATA NASC de $e.dataNascimento para $dataNascimento; "            
             new Logs().add(id, nome, "ALTERAÇÃO" , operacao)
 
             e.nome = nome
             e.celular = celular
+            e.dataNascimento = dataNascimento
             e.groups = prepareGroups(groups)
             e.lastUpdated = (new Clock()).getDateTime()
             e.save()
         }
     }
 
-    def add(nome, celular, groups) {
+    def add(nome, celular, dataNacimento, groups) {
         datastore.withTransaction(true) {
             def e = new Entity("motorista")
             e.nome = nome
             e.celular = celular
+            e.dataNascimento = dataNascimento
             e.pontos = 0
             e.bonus = 0
             e.curti = 0

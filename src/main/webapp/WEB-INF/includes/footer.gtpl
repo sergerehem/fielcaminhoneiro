@@ -5,11 +5,22 @@
     <!-- JavaScript -->
     <script src="/js/bootstrap.js"></script>
 
+    <!-- DatePicker -->
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+      jQuery('#sandbox-container .input-group.date').datepicker({
+          format: "dd/mm/yyyy",
+          language: "pt-BR"
+      });      
+    </script>  
+
+
 		<!-- Masked Input -->
 		<script src="/js/jquery.maskedinput.min.js" type="text/javascript"></script>
     <script type="text/javascript">
 		jQuery(function(jQuery){
 			 jQuery(".phone").mask("(99)9999-9999?");
+			 jQuery(".dateMask").mask("99/99/9999");
 		});
     </script> 
 

@@ -20,6 +20,9 @@
     <link href="/css/chosen.min.css" rel="stylesheet" type="text/css">
     <link href="/css/chosen-bootstrap.css" rel="stylesheet" type="text/css">
 
+    <!-- Date Picker -->
+    <link href="/css/datepicker3.css" rel="stylesheet">
+        
     <!-- Page Specific CSS 
     <link rel="stylesheet" href="/css/morris-0.4.3.min.css">
 		-->

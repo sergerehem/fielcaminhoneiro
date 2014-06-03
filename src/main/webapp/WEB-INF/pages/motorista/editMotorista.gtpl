@@ -47,6 +47,14 @@
           </div>      
         </div>
         <div class="form-group">
+          <label for="dataNascimento" class="col-lg-2 control-label">Data de Nascimento</label>
+          <div class="span5 col-lg-6" id="sandbox-container">
+            <div class="input-group date">
+              <input id="dataNascimento" name="dataNascimento" type="text" value="${motorista?.dataNascimento ? motorista.dataNascimento : ''}" class="form-control dateMask"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+            </div>
+          </div>          
+        </div>
+        <div class="form-group">
           <label for="groups" class="col-lg-2 control-label">Grupos</label>
           <div class="col-lg-6">
             <select id="groups" name="groups" data-placeholder="Grupos..." class="form-control chosen-select" multiple<%if (request.view) {%> disabled<%}%>>
