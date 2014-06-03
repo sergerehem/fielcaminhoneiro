@@ -43,6 +43,15 @@ public class Clock {
 	String getAAAMMDD() {
 		getYear()+getMonth()+getDay()
 	}
+	
+	def isBirthday(aDate) {
+	  /*if (aDate != null && aDate.trim() != "") {
+  	  return getDate()[0..4] == aDate[0..4]
+    }
+    return false	  
+    */
+    aDate
+	}
 
    
 }

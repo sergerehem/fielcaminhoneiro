@@ -17,7 +17,7 @@ TODO: FILTER POR GRUPO, MULTI-SELECT
 <%}%>
 
 <div class="row">
-  <div class="col-md-7">
+  <div class="col-md-4">
     <div class="input-group custom-search-form">
       <input type="text" id="search" name="search" class="form-control" placeholder="procurar...">
       <span class="input-group-btn">
@@ -27,6 +27,16 @@ TODO: FILTER POR GRUPO, MULTI-SELECT
       </span>
     </div> <!--/input-group -->
   </div>
+  <div class="col-md-3">
+    <div class="form-group">
+        <select id="groups" name="groups" data-placeholder="Grupos..." class="form-control chosen-select filter-group" multiple>
+          <option value=""></option>
+          <% request.groups.each { g -> %>
+            <span class="badge"><option value="$g.name">$g.name</option></span>
+          <% } %>  
+        </select>        
+    </div>
+  </div>  
   <div class="col-md-4 col-md-offset-1">
     <button id="btnEnviarSMS" class="btn btn-info"  data-toggle="modal" data-target="#formSMS" disabled><i class="fa fa-comments"></i> SMS <span id="qtdSMS" class="badge" style="display:none">2</span></button>
     <a href="/motorista/add" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Incluir Motorista</a>
@@ -163,20 +173,27 @@ TODO: FILTER POR GRUPO, MULTI-SELECT
         Ladda.bind( 'div:not(.progress-demo) button', { timeout: 1000 } );
 
         //Ladda.bind( '#btnConfirmarSMS' );
-
-        (jQuery)('table.intercept').bind({
-                'footable_sorting': function (e) {
-                    //return confirm('Do you want to sort by column: ' + e.column.name + ', direction: ' + e.direction);
-                },
-                'footable_filtered  ': function (e) {
-                    update();
-                    //alert('filter');
-                },
-                'footable_paging': function (e) {
-                    //update();
-                }
-            });
+        
+        (jQuery)('table').footable().bind(
+          'footable_filtering', function (e) {
+              var selected = (jQuery)('.filter-group').find(':selected').text();
+              if (selected && selected.length > 0) {
+                e.filter += (e.filter && e.filter.length > 0) ? ' ' + selected : selected;
+                e.clear = !e.filter;
+              }
         });
+
+
+        (jQuery)('table').footable().bind(
+           'footable_filtered', function (e) {
+                update();
+        });
+           
+        (jQuery)('.filter-group').change(function (e) {
+          e.preventDefault();
+          (jQuery)('table').trigger('footable_filter', {filter: (jQuery)('#search').val()});
+        });
+    });
 
 </script>
 

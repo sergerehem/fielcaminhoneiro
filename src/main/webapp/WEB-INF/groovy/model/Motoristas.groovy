@@ -123,7 +123,7 @@ public class Motoristas {
         }
     }
 
-    def add(nome, celular, dataNacimento, groups) {
+    def add(nome, celular, dataNascimento, groups) {
         datastore.withTransaction(true) {
             def e = new Entity("motorista")
             e.nome = nome
