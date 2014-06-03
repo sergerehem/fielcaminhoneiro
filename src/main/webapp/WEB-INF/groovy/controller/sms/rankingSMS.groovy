@@ -12,7 +12,7 @@ if (user == null) {
   def motoristas = new Motoristas().listRanking()
 
   motoristas.eachWithIndex { m, i ->
-  if (i==0){
+
     def cartao =  new Cartao(m.pontos)
       
     def msg = 'Vc tem '+ m.pontos + ' pontos no Clube Fiel Caminhoneiro (Ultima viagem: ' + m.dateCreated[0..9] + 
@@ -27,5 +27,5 @@ if (user == null) {
       msg+="<br>"
     }
     println msg
-  }}
+  }
 }
