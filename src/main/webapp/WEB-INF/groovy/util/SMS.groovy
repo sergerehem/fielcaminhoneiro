@@ -25,7 +25,7 @@ public class SMS {
         params.add(new BasicNameValuePair("From", PHONE_NUMBER));
         params.add(new BasicNameValuePair("To", number));
         params.add(new BasicNameValuePair("Body", message));
-        params.add(new BasicNameValuePair("StatusCallback", CALLBACK))
+        //params.add(new BasicNameValuePair("StatusCallback", CALLBACK))
 
         MessageFactory messageFactory = client.getAccount().getMessageFactory();
         Message smsMessage = messageFactory.create(params);
