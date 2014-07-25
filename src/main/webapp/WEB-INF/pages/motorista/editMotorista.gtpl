@@ -31,10 +31,16 @@
   <strong style="font-size:20pt;">BÔNUS!!!</strong> Pague agora <span class="label label-success" style="font-size: 18pt;"><i class="fa fa-money"></i> $params.pagarBonus</span> ao motorista porque ele completou <span style="font-size:20pt;" class="label ${motorista.categoria}"><i class="fa fa-certificate"></i> ${motorista?.pontos}</span> pontos!!!</strong>
 </div>
 <%}%>
-<%if (params.flush != null) { %>
+<%if (params.flush != "" && params.flush != null) { %>
 <div class="alert alert-info alert-dismissable">
   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
   $params.flush
+</div>
+<%}%>
+<%if (params.flushErro != "" && params.flush != null && params.flush != "null") { %>
+<div class="alert alert-danger alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  $params.flushErro
 </div>
 <%}%>
 <div class="row">
@@ -376,7 +382,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3 class="modal-title"><span class="label label-info label-lg"><i class="fa fa-comments"></i> SMS</span> Enviar para ${motorista.celular}</h3>
+        <h3 class="modal-title"><span class="label label-info label-lg"><i class="fa fa-comments"></i> SMS</span> Enviar para ${motorista.nome} <span class="badge">${motorista.celular}<span></h3>
       </div>
       <form action="/sms/send" method="post" role="form">
         <fieldset>

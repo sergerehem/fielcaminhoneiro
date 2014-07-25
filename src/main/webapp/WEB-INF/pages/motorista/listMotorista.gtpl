@@ -15,6 +15,12 @@ TODO: FILTER POR GRUPO, MULTI-SELECT
   $params.flush
 </div>
 <%}%>
+<%if (params.flushErro != null) { %>
+<div class="alert alert-danger alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  $params.flushErro
+</div>
+<%}%>
 
 <div class="row">
   <div class="col-md-4">

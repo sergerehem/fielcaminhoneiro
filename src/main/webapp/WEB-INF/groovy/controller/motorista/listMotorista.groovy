@@ -28,6 +28,7 @@ if (user == null) {
   request.group = params.group
 
   request.flush = params.flush
+  request.flushErro = params.flushErro
 
   forward '/WEB-INF/pages/motorista/listMotorista.gtpl'
 }

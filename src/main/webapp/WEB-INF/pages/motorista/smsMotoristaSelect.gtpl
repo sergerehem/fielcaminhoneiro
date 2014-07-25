@@ -1,9 +1,16 @@
 <% include '/WEB-INF/includes/header.gtpl' %>
 
-  <%if (params.flush != null) { %>
+  <%if (request.flush != "" && request.flush != null && request.flush != "null") { %>
   <div class="alert alert-info alert-dismissable">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    $params.flush
+    $request.flush
+  </div>
+  <%}%>
+
+  <%if (request.flushErro != "" && request.flushErro != null && request.flushErro != "null") { %>
+  <div class="alert alert-danger alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    $request.flushErro
   </div>
   <%}%>
 
@@ -28,7 +35,7 @@
                 <% } %>  
               <option disabled>-- MOTORISTAS --</option>                
                 <% request.motoristas.each { motorista -> %>
-                  <option value="m_${motorista.key.id}_${motorista.celular}">${motorista.nome}</option>
+                  <option value="m_${motorista.key.id}_${motorista.celular}">${motorista.nome} -> ${motorista.celular}</option>
                 <% } %>  
             </select>
           </div>
@@ -48,7 +55,7 @@
   <%if (request.msgLog != null) { %>
   <div class="panel panel-default">
     <!-- Default panel contents -->
-    <div class="panel-heading">SMS enviada com sucesso para $request.total motoristas!</div>
+    <div class="panel-heading">$request.flush | $request.flushErro</div>
     <div class="panel-body">
       <div class="well well-lg">${request.mensagem ?: ""}</div>
     </div>

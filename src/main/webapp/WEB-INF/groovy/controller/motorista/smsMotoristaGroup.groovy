@@ -8,6 +8,7 @@ if (user == null) {
 
     def smsEnviados = [] 
     def total = 0
+    def totalErros = 0
     def msgLog = []
     
     def groups = params.groups as String[] 
@@ -19,12 +20,17 @@ if (user == null) {
             (m, id, cel) = p.tokenize("_")
 
             if (!(cel in smsEnviados)) {
-              def msgId = sms.sendSMS(cel, msg)
-              new Motoristas().addSMS(id, msg)
-              smsEnviados << cel
-              msgLog << "SMS enviado para $cel"
-              total++
-            }
+              try {            
+                def msgId = sms.sendSMS(cel, msg)
+                new Motoristas().addSMS(id, msg)
+                smsEnviados << cel
+                msgLog << "SMS enviado para $cel"
+                total++
+              } catch (Exception ex) {
+                msgLog << "SMS **ERRO DE ENVIO** para ${cel} - ${ex.getMessage()}"
+                totalErros++
+              }
+            } 
         } else { // é um grupo
           if (p.startsWith("g_")) {
           
@@ -34,12 +40,17 @@ if (user == null) {
               def motoristas = new Motoristas().listByGroup(group)
               motoristas.each { m ->
                 if (!(m.celular in smsEnviados)) {
-                  def msgId = sms.sendSMS(m.celular, msg)
-                  def id = m.key.id as String
-                  new Motoristas().addSMS(id, msg)
-                  smsEnviados << m.celular 
-                  msgLog << "+----> SMS enviado para ${m.celular}"
-                  total++
+                  try {
+                    def msgId = sms.sendSMS(m.celular, msg)
+                    def id = m.key.id as String
+                    new Motoristas().addSMS(id, msg)
+                    smsEnviados << m.celular 
+                    msgLog << "+----> SMS enviado para ${m.celular}"
+                    total++
+                  } catch (Exception ex) {
+                    msgLog << "+----> SMS **ERRO DE ENVIO** para ${m.celular}: ${ex.getMessage()}"
+                    totalErros++
+                  } 
                 }
               }
           }
@@ -59,9 +70,11 @@ if (user == null) {
     request.msgLog = msgLog
     request.total = total
         
-    request.flush = "SMS enviado com sucesso para $total motoristas!"
+    request.flush = (total > 0) ?"SMS enviado com sucesso para $total motoristas!" : ""
+
+    request.flushErro = (totalErros > 0) ? "$totalErros erros de envio de SMS" : ""
 
     new SMSLog().add(msg, msgLog as String, total)
       
-    forward "/controller/motorista/smsMotoristaSelect.groovy?flush=SMS enviado com sucesso para $total motoristas"
+    forward "/controller/motorista/smsMotoristaSelect.groovy" //"?flush=${request.flush}&flushErro=$flushErro"
 }

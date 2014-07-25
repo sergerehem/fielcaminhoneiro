@@ -6,6 +6,8 @@ if (user == null) {
 } else {
 
     def total = 0
+    def totalErro = 0
+    
     params.keySet().each { p ->
         if (p.startsWith("m_")) {
             (m, id, cel) = p.tokenize("_")
@@ -13,17 +15,20 @@ if (user == null) {
             def sms = new SMS()
             def msg = params.texto + ((params.texto).endsWith('.') ? " " : ". ") + params.assinatura
 
-            def msgId = sms.sendSMS(cel, msg)
-            def ret = new Motoristas().addSMS(id, msg)
-
-            total++
-        }
+            try {
+              def msgId = sms.sendSMS(cel, msg)
+              def ret = new Motoristas().addSMS(id, msg)
+              total++
+            } catch (Exception ex) {
+              totalErros++
+            }        
     }
 
-
-    request.flush = "SMS enviado com sucesso para $total motoristas!"
-
-    forward "/controller/motorista/listMotorista.groovy?flush=SMS enviado com sucesso para $total motoristas"
+    request.flush = (total > 0) ?"SMS enviado com sucesso para $total motoristas!" : ""
+    request.flushErro = (totalErros > 0) ? "$totalErros erros de envio de SMS" : ""
+    
+    forward "/controller/motorista/listMotorista.groovy?flush=${request.flush}&flushErro=${request.flushErro}"
+    
     //forward '/WEB-INF/pages/motorista/listMotorista.gtpl'
 }
 

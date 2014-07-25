@@ -45,12 +45,11 @@ public class Clock {
 	}
 	
 	def isBirthday(aDate) {
-	  /*if (aDate != null && aDate.trim() != "") {
+	  if (aDate != null && aDate.trim() != "") {
   	  return getDate()[0..4] == aDate[0..4]
     }
     return false	  
-    */
-    aDate
+    //aDate
 	}
 
    
